@@ -170,6 +170,30 @@ a { color: inherit; text-decoration: none; }
 .success-wrap h1 { font-size: 42px; color: var(--pink); }
 .success-wrap p { line-height: 1.7; }
 
+/* admin */
+.admin-wrap { max-width: 560px; margin: 0 auto; padding: 60px 22px; }
+.admin-wrap.wide { max-width: 980px; }
+.admin-wrap h1 { font-size: 34px; margin-bottom: 10px; }
+.admin-input {
+  display: block; width: 100%; padding: 14px; margin: 16px 0 12px;
+  border: 3px solid var(--ink); border-radius: 12px; font-family: "Space Mono", monospace;
+}
+.admin-msg { background: #fff; border: 2px dashed var(--ink); border-radius: 10px; padding: 10px 14px; font-size: 13px; }
+.admin-editor { background: #fff; border: 3px solid var(--ink); border-radius: 14px; padding: 18px; margin: 18px 0; }
+.admin-editor textarea {
+  width: 100%; font-family: "Space Mono", monospace; font-size: 12.5px;
+  border: 2px solid var(--ink); border-radius: 10px; padding: 12px;
+}
+.admin-hint { font-size: 12px; opacity: .75; line-height: 1.6; }
+.admin-row { display: flex; gap: 10px; margin-top: 10px; }
+.admin-table { width: 100%; border-collapse: collapse; margin: 14px 0 30px; }
+.admin-table td { border-bottom: 2px solid rgba(20,18,31,.15); padding: 10px 8px; vertical-align: middle; }
+.cell-img img { width: 56px; height: 56px; object-fit: contain; background: #eee; border-radius: 8px; }
+.cell-actions { text-align: right; white-space: nowrap; }
+.cell-actions .opt { padding: 6px 10px; font-size: 12px; margin-left: 6px; }
+.opt.danger { border-color: var(--red); color: var(--red); }
+.row-hidden { opacity: .45; }
+
 /* footer */
 .site-footer { margin-top: 60px; background: var(--ink); color: var(--cream); text-align: center; padding: 34px 20px; }
 .foot-script { font-family: "Pacifico", cursive; color: var(--pink); font-size: 26px; margin: 0 0 8px; }

@@ -23,7 +23,7 @@ export async function POST(req) {
   }
 
   const { productId, edition = "standard", size = null } = body || {};
-  const product = getProduct(productId);
+  const product = await getProduct(productId);
   if (!product || product.comingSoon) {
     return NextResponse.json({ error: "Unknown product" }, { status: 404 });
   }

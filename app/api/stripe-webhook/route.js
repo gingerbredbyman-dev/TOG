@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getProduct } from "../../../lib/catalog";
+import { allProductsRaw } from "../../../lib/catalog";
 import map from "../../../data/printful-map.json";
 
 const STRIPE_API_VERSION = "2025-02-24.acacia";
@@ -80,7 +80,8 @@ export async function POST(req) {
   }
 
   const { productId, edition, size } = full.metadata || {};
-  const product = getProduct(productId);
+  // Raw lookup: a product hidden AFTER purchase must still fulfill.
+  const product = (await allProductsRaw()).find((p) => p.id === productId) || null;
   if (!productId || !product) {
     await alert(`paid session ${full.id} has no/unknown product metadata (${productId})`);
     return NextResponse.json({ received: true, fulfillment: "no-metadata" });

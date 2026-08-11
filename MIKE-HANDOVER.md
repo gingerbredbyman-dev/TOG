@@ -1,4 +1,8 @@
-# 🏳️‍🌈 Mike's Handover — connecting YOUR money to YOUR store
+# 🏳️‍🌈 Mike's Handover — connecting YOUR money to The Official Gay Guy Shop
+
+**The deal, in one line:** this is a 50/50 partner project — sales land in your
+Stripe, base costs bill your Printful, and you two settle the 50/50 split monthly
+(when it gets big, we flip on Stripe Connect and the split happens automatically).
 
 Hi Mike. The store is built. Every design is loaded. It prints one item at a time,
 only when a fan pays — you never buy inventory, ever. Two short missions and the

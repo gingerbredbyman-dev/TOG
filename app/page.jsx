@@ -1,8 +1,10 @@
 import { allSections } from "../lib/catalog";
 import { formatPrice, webPath } from "../lib/format";
 
-export default function Home() {
-  const sections = allSections();
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const sections = await allSections();
   return (
     <main>
       <section className="hero">

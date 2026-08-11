@@ -1,9 +1,9 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "The Official Gay Guy — Official Merch",
+  title: "The Official Gay Guy Shop",
   description:
-    "Officially certified tees, caps, mugs and stickers from The Official Gay Guy. Every product printed per order. Standard or Ethical edition — your call.",
+    "The Official Gay Guy Shop — officially certified tees, caps, mugs and stickers, printed per order in the USA. Florida born. Standard or Ethical edition — your call.",
 };
 
 export default function RootLayout({ children }) {
@@ -23,8 +23,8 @@ export default function RootLayout({ children }) {
             <img src="/logo.png" alt="T.O.G. seal" className="brand-seal" />
             <span className="brand-words">
               <span className="brand-script">The Official</span>
-              <span className="brand-chunk">GAY GUY</span>
-              <span className="brand-sub">OFFICIAL MERCH • EST. SOUTH FLORIDA</span>
+              <span className="brand-chunk">GAY GUY SHOP</span>
+              <span className="brand-sub">FLORIDA</span>
             </span>
           </a>
           <nav className="site-nav">
@@ -36,10 +36,11 @@ export default function RootLayout({ children }) {
         </header>
         {children}
         <footer className="site-footer">
-          <p className="foot-script">the official gay guy</p>
+          <p className="foot-script">the official gay guy shop</p>
           <p className="foot-fine">
-            every item printed per order — no warehouses, no waste • Ethical Edition art
-            from consenting sources only • satire • for entertainment purposes only
+            Florida • a 50/50 partner project • every item printed per order — no
+            warehouses, no waste • Ethical Edition art from consenting sources only •
+            satire • for entertainment purposes only
           </p>
         </footer>
       </body>

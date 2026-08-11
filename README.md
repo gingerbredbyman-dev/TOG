@@ -1,4 +1,8 @@
-# tog-store — The Official Gay Guy merch storefront
+# The Official Gay Guy Shop (tog-store)
+
+**Florida · a 50/50 partner project** — revenue splits 50/50 between Mike (The
+Official Gay Guy) and Austin. Stripe lands everything in Mike's account; settle the
+split monthly (upgrade path if it gets big: Stripe Connect for automatic splits).
 
 Next.js storefront with Stripe Checkout + Printful per-order fulfillment.
 Every product ships in Standard and (mostly) Ethical editions from
@@ -26,6 +30,19 @@ success page. Real mode: copy `.env.example` → `.env.local` and fill keys
 - `scripts/sync-merch.mjs` — pushes catalog into Printful (file upload → sync
   products → variant map in `data/printful-map.json`). `--dry-run` validates.
 - `MIKE-HANDOVER.md` — the owner onboarding doc.
+
+## Admin setup (owner-editable catalog, no code)
+
+`/admin` lets the owner add / edit / hide / delete any product from the browser.
+
+1. Create a Supabase project → SQL editor → run the DDL at the top of
+   `scripts/seed-supabase.mjs` (one `products` table)
+2. Env: `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `ADMIN_PASSWORD`
+3. `node --env-file-if-exists=.env.local scripts/seed-supabase.mjs` (loads the 19
+   current products; safe to re-run)
+4. Visit `/admin`, enter the password. Changes are live instantly — no deploys.
+
+Without Supabase the shop still runs read-only from `data/products.json`.
 
 ## Launch sequence (ORDER MATTERS — the variant map is bundled at build time)
 
