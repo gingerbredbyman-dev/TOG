@@ -14,5 +14,5 @@ export default async function ProductPage({ params }) {
       </main>
     );
   }
-  return <ProductView product={product} />;
+  return <ProductView key={product.id} product={product} />;
 }

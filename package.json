@@ -2,11 +2,12 @@
   "name": "tog-store",
   "version": "0.1.0",
   "private": true,
+  "engines": { "node": ">=20.0.0" },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "sync": "node scripts/sync-merch.mjs"
+    "sync": "node --env-file-if-exists=.env.local scripts/sync-merch.mjs"
   },
   "dependencies": {
     "next": "^15.4.0",

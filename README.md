@@ -27,16 +27,20 @@ success page. Real mode: copy `.env.example` → `.env.local` and fill keys
   products → variant map in `data/printful-map.json`). `--dry-run` validates.
 - `MIKE-HANDOVER.md` — the owner onboarding doc.
 
-## Launch sequence
+## Launch sequence (ORDER MATTERS — the variant map is bundled at build time)
 
 1. `npm run sync -- --dry-run` (catalog sanity)
-2. Deploy: `vercel` (preview) → `vercel --prod` once blessed
+2. First deploy: `vercel --prod` (site must be public so Printful can download print files)
 3. Mike: Stripe teammate invite + Printful billing (MIKE-HANDOVER.md)
-4. Set env on Vercel: STRIPE_*, PRINTFUL_*, NEXT_PUBLIC_SITE_URL, DEMO_CHECKOUT=0
+4. Set env on Vercel: STRIPE_*, PRINTFUL_API_KEY, PRINTFUL_STORE_ID,
+   SITE_ORIGIN=https://<domain>, NEXT_PUBLIC_SITE_URL=https://<domain>, remove DEMO_CHECKOUT
 5. Stripe dashboard → Webhooks → add `https://<domain>/api/stripe-webhook`
-   (event: `checkout.session.completed`) → copy signing secret to env
-6. `npm run sync` (creates real Printful products + mockups)
-7. Test-mode order → refund → `FULFILL=on` → real sticker to Mike's house
+   (events: `checkout.session.completed`, `checkout.session.async_payment_succeeded`)
+   → copy signing secret to env
+6. `npm run sync` (creates/updates Printful products) → **commit the regenerated
+   `data/printful-map.json` → `vercel --prod` again** (bundles the fresh map)
+7. Test-mode order → refund → set `FULFILL=on` (+ optional ALERT_NTFY_URL) → redeploy
+   → real sticker order to Mike's house
 
 ## Not yet / later
 
