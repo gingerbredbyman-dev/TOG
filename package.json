@@ -1,0 +1,17 @@
+{
+  "name": "tog-store",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "sync": "node scripts/sync-merch.mjs"
+  },
+  "dependencies": {
+    "next": "^15.4.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "stripe": "^17.5.0"
+  }
+}

@@ -1,0 +1,244 @@
+{
+  "currency": "usd",
+  "sections": [
+    { "id": "tees", "title": "Tees" },
+    { "id": "caps", "title": "The Official Caps" },
+    { "id": "mugs", "title": "Mug" },
+    { "id": "stickers", "title": "Stickers" }
+  ],
+  "products": [
+    {
+      "id": "official-gay-shirt",
+      "section": "tees",
+      "name": "The Official Gay Shirt",
+      "tagline": "Certified ✦ Authentic ✦ Serial No. 001",
+      "priceCents": 2999,
+      "garment": "black",
+      "sizes": ["S", "M", "L", "XL", "2XL", "3XL"],
+      "editions": {
+        "standard": { "image": "/designs/tee-hero.png" },
+        "ethical": { "image": "/designs/eth-tee-hero.png" }
+      },
+      "pf": { "type": "tshirt", "color": "Black", "placement": "front" }
+    },
+    {
+      "id": "boc-boc-mutetv",
+      "section": "tees",
+      "name": "Boc Boc Boc on #MuteTV",
+      "tagline": "as not heard on television",
+      "priceCents": 2999,
+      "garment": "black",
+      "sizes": ["S", "M", "L", "XL", "2XL", "3XL"],
+      "editions": {
+        "standard": { "image": "/designs/tee-boc.png" },
+        "ethical": { "image": "/designs/eth-tee-boc.png" }
+      },
+      "pf": { "type": "tshirt", "color": "Black", "placement": "front" }
+    },
+    {
+      "id": "too-gay-to-fail",
+      "section": "tees",
+      "name": "Too Gay To Fail",
+      "tagline": "Federally Fabulous",
+      "priceCents": 2999,
+      "garment": "black",
+      "sizes": ["S", "M", "L", "XL", "2XL", "3XL"],
+      "editions": {
+        "standard": { "image": "/designs/tee-toogay.png" },
+        "ethical": { "image": "/designs/eth-tee-toogay.png" }
+      },
+      "pf": { "type": "tshirt", "color": "Black", "placement": "front" }
+    },
+    {
+      "id": "allegedly",
+      "section": "tees",
+      "name": "ALLEGEDLY*",
+      "tagline": "satire • my own opinion • for entertainment purposes only",
+      "priceCents": 2999,
+      "garment": "cream",
+      "sizes": ["S", "M", "L", "XL", "2XL", "3XL"],
+      "editions": {
+        "standard": { "image": "/designs/tee-allegedly.png" },
+        "ethical": { "image": "/designs/eth-tee-allegedly.png" }
+      },
+      "pf": { "type": "tshirt", "color": "Natural", "placement": "front" }
+    },
+    {
+      "id": "get-out-and-vote",
+      "section": "tees",
+      "name": "GET OUT AND VOTE",
+      "tagline": "front + back: Vote for Space Rock 2026",
+      "priceCents": 3299,
+      "garment": "cream",
+      "sizes": ["S", "M", "L", "XL", "2XL", "3XL"],
+      "twoSided": true,
+      "editions": {
+        "standard": { "image": "/designs/tee-vote-front.png", "back": "/designs/tee-vote-back.png" },
+        "ethical": { "image": "/designs/eth-tee-vote-front.png", "back": "/designs/eth-tee-vote-back.png" }
+      },
+      "pf": { "type": "tshirt", "color": "Natural", "placement": "front+back" }
+    },
+    {
+      "id": "good-morning-im-gay",
+      "section": "tees",
+      "name": "Good Morning I'm Gay",
+      "tagline": "his signature greeting, on a shirt",
+      "priceCents": 2999,
+      "garment": "navy",
+      "sizes": ["S", "M", "L", "XL", "2XL", "3XL"],
+      "editions": {
+        "standard": { "image": "/designs/tee-goodmorning.png" }
+      },
+      "pf": { "type": "tshirt", "color": "Navy", "placement": "front" }
+    },
+    {
+      "id": "official-ally",
+      "section": "tees",
+      "name": "Official Ally of The Official Gay Guy",
+      "tagline": "certification series",
+      "priceCents": 2999,
+      "comingSoon": true,
+      "editions": { "ethical": { "image": "/designs/eth-badge-ally.png" } }
+    },
+    {
+      "id": "official-straight-mate",
+      "section": "tees",
+      "name": "Official Straight Mate of The Official Gay Guy",
+      "tagline": "verified ✓",
+      "priceCents": 2999,
+      "comingSoon": true,
+      "editions": { "ethical": { "image": "/designs/eth-badge-straightmate.png" } }
+    },
+    {
+      "id": "official-fan",
+      "section": "tees",
+      "name": "Official Fan of The Official Gay Guy",
+      "tagline": "certification series",
+      "priceCents": 2999,
+      "comingSoon": true,
+      "editions": { "ethical": { "image": "/designs/eth-badge-fan.png" } }
+    },
+    {
+      "id": "gay-cap",
+      "section": "caps",
+      "name": "The Official Gay Cap",
+      "tagline": "rainbow bars + rainbow heart",
+      "priceCents": 2799,
+      "garment": "pink",
+      "sizes": ["One Size"],
+      "editions": { "standard": { "image": "/designs/cap-gay.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "cap", "color": "Pink", "placement": "embroidery_front" }
+    },
+    {
+      "id": "straight-cap",
+      "section": "caps",
+      "name": "The Official Straight Cap",
+      "tagline": "greyscale bars. that's the joke.",
+      "priceCents": 2799,
+      "garment": "black",
+      "sizes": ["One Size"],
+      "editions": { "standard": { "image": "/designs/cap-straight.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "cap", "color": "Black", "placement": "embroidery_front" }
+    },
+    {
+      "id": "bi-cap",
+      "section": "caps",
+      "name": "The Official Bi Cap",
+      "tagline": "pink • purple • blue",
+      "priceCents": 2799,
+      "garment": "navy",
+      "sizes": ["One Size"],
+      "editions": { "standard": { "image": "/designs/cap-bi.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "cap", "color": "Navy", "placement": "embroidery_front" }
+    },
+    {
+      "id": "asexual-cap",
+      "section": "caps",
+      "name": "Official Asexual Cap",
+      "tagline": "black • grey • white • purple",
+      "priceCents": 2799,
+      "garment": "black",
+      "sizes": ["One Size"],
+      "editions": { "standard": { "image": "/designs/cap-asexual.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "cap", "color": "Black", "placement": "embroidery_front" }
+    },
+    {
+      "id": "lesbian-cap",
+      "section": "caps",
+      "name": "The Official Lesbian Cap",
+      "tagline": "sunset bars",
+      "priceCents": 2799,
+      "garment": "cream",
+      "sizes": ["One Size"],
+      "editions": { "standard": { "image": "/designs/cap-lesbian.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "cap", "color": "Stone", "placement": "embroidery_front" }
+    },
+    {
+      "id": "queer-cap",
+      "section": "caps",
+      "name": "The Official Queer Cap",
+      "tagline": "rainbow + lavender",
+      "priceCents": 2799,
+      "garment": "navy",
+      "sizes": ["One Size"],
+      "editions": { "standard": { "image": "/designs/cap-queer.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "cap", "color": "Navy", "placement": "embroidery_front" }
+    },
+    {
+      "id": "tears-mug",
+      "section": "mugs",
+      "name": "Filled With The Tears Of Conservatives",
+      "tagline": "getting there → delicious → fully hydrated",
+      "priceCents": 1799,
+      "garment": "white",
+      "sizes": ["11 oz"],
+      "editions": {
+        "standard": { "image": "/designs/mug-wrap.png" },
+        "ethical": { "image": "/designs/eth-mug-wrap.png" }
+      },
+      "pf": { "type": "mug", "color": "White", "placement": "default" }
+    },
+    {
+      "id": "seal-sticker",
+      "section": "stickers",
+      "name": "T.O.G. Seal Sticker",
+      "tagline": "THE logo, kiss-cut",
+      "priceCents": 499,
+      "garment": "white",
+      "sizes": ["3\" × 3\""],
+      "editions": { "standard": { "image": "/designs/sticker-seal.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "sticker", "color": "White", "placement": "default" }
+    },
+    {
+      "id": "goodmorning-sticker",
+      "section": "stickers",
+      "name": "Good Morning I'm Gay Sticker",
+      "tagline": "start every laptop lid correctly",
+      "priceCents": 499,
+      "garment": "white",
+      "sizes": ["4\" × 3\""],
+      "editions": { "standard": { "image": "/designs/tee-goodmorning.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "sticker", "color": "White", "placement": "default" }
+    },
+    {
+      "id": "gay-hat-sticker",
+      "section": "stickers",
+      "name": "The Official Gay Hat Sticker",
+      "tagline": "a hat, officially",
+      "priceCents": 499,
+      "garment": "white",
+      "sizes": ["4\" × 3\""],
+      "editions": { "standard": { "image": "/designs/sticker-gayhat.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "sticker", "color": "White", "placement": "default" }
+    }
+  ]
+}
