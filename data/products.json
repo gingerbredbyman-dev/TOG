@@ -83,7 +83,7 @@
       "twoSided": true,
       "situ": "/mockups/situ-vote-back.webp",
       "editions": {
-        "standard": { "image": "/designs/tee-vote-front.png", "back": "/designs/tee-vote-back.png" },
+        "standard": { "image": "/designs/tee-vote-front.png", "back": "/designs/sticker-spacerock-seal.png" },
         "ethical": { "image": "/designs/eth-tee-vote-front.png", "back": "/designs/eth-tee-vote-back.png" }
       },
       "pf": { "type": "tshirt", "color": "Natural", "placement": "front+back" }
@@ -368,6 +368,34 @@
       "editions": { "standard": { "image": "/designs/luxe-mug-wrap.png" } },
       "unifiedEdition": true,
       "pf": { "type": "mug", "color": "White", "placement": "default" }
+    },
+    {
+      "id": "spacerock-seal-sticker", "section": "stickers",
+      "name": "Space Rock 2026 Campaign Seal Sticker",
+      "tagline": "the official campaign badge (also the vote-shirt back)",
+      "priceCents": 599, "shipCents": 429, "garment": "white", "sizes": ["3\" × 3\""],
+      "editions": { "standard": { "image": "/designs/sticker-spacerock-seal.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "sticker", "color": "White", "placement": "default" }
+    },
+    {
+      "id": "spacerock-angry-sticker", "section": "stickers",
+      "name": "Angry Space Rock Sticker",
+      "tagline": "he's got a tie and he's coming for the incumbents",
+      "priceCents": 599, "shipCents": 429, "garment": "white", "sizes": ["3\" × 3\""],
+      "situ": "/mockups/situ-spacerock-angry.webp",
+      "editions": { "standard": { "image": "/designs/sticker-spacerock-angry.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "sticker", "color": "White", "placement": "default" }
+    },
+    {
+      "id": "headwordmark-sticker", "section": "stickers",
+      "name": "The Official Gay Guy Sticker",
+      "tagline": "the man himself, die-cut",
+      "priceCents": 499, "shipCents": 429, "garment": "white", "sizes": ["4\" × 3\""],
+      "editions": { "standard": { "image": "/designs/sticker-headwordmark.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "sticker", "color": "White", "placement": "default" }
     },
     {
       "id": "luxe-space-rock-sticker", "section": "stickers", "luxe": true,
