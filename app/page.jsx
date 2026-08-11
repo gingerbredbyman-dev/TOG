@@ -36,6 +36,7 @@ export default async function Home() {
               const card = (
                 <div className={`card ${p.comingSoon ? "soon" : ""}`}>
                   {p.comingSoon && <span className="soon-badge">SOON</span>}
+                  {p.luxe && !p.comingSoon && <span className="luxe-badge">LUXE ✦</span>}
                   {ethicalOnly && <span className="eth-chip">ETHICAL AI ✦</span>}
                   <div className={`card-img garment-${p.garment || "white"}`}>
                     <img src={cardImg} alt={p.name} loading="lazy" />

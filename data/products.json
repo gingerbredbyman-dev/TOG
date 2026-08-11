@@ -265,6 +265,119 @@
       "editions": { "standard": { "image": "/designs/sticker-goodmorning.png" } },
       "unifiedEdition": true,
       "pf": { "type": "sticker", "color": "White", "placement": "default" }
+    },
+    {
+      "id": "luxe-gay-cap", "section": "caps", "luxe": true,
+      "name": "Ocean Drive Gay Cap — Luxe",
+      "tagline": "neon script, gold deco serif, enamel bars • T.O.G. seal on the side",
+      "priceCents": 3499, "shipCents": 499, "garment": "teal", "sizes": ["One Size"],
+      "situ": "/mockups/luxe-situ-cap-gay.webp",
+      "editions": { "standard": { "image": "/designs/luxe-cap-gay.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "cap", "color": "Spruce", "placement": "embroidery_front" }
+    },
+    {
+      "id": "luxe-straight-cap", "section": "caps", "luxe": true,
+      "name": "Ocean Drive Straight Cap — Luxe",
+      "tagline": "warm greys. still the joke, but make it classy.",
+      "priceCents": 3499, "shipCents": 499, "garment": "cream", "sizes": ["One Size"],
+      "situ": "/mockups/luxe-situ-cap-straight.webp",
+      "editions": { "standard": { "image": "/designs/luxe-cap-straight.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "cap", "color": "Stone", "placement": "embroidery_front" }
+    },
+    {
+      "id": "luxe-bi-cap", "section": "caps", "luxe": true,
+      "name": "Ocean Drive Bi Cap — Luxe",
+      "tagline": "rose • violet • deep blue enamel",
+      "priceCents": 3499, "shipCents": 499, "garment": "navy", "sizes": ["One Size"],
+      "situ": "/mockups/luxe-situ-cap-bi.webp",
+      "editions": { "standard": { "image": "/designs/luxe-cap-bi.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "cap", "color": "Navy", "placement": "embroidery_front" }
+    },
+    {
+      "id": "luxe-asexual-cap", "section": "caps", "luxe": true,
+      "name": "Ocean Drive Asexual Cap — Luxe",
+      "tagline": "ink • grey • cream • violet enamel",
+      "priceCents": 3499, "shipCents": 499, "garment": "black", "sizes": ["One Size"],
+      "situ": "/mockups/luxe-situ-cap-asexual.webp",
+      "editions": { "standard": { "image": "/designs/luxe-cap-asexual.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "cap", "color": "Black", "placement": "embroidery_front" }
+    },
+    {
+      "id": "luxe-lesbian-cap", "section": "caps", "luxe": true,
+      "name": "Ocean Drive Lesbian Cap — Luxe",
+      "tagline": "sunset rose • apricot • wine enamel",
+      "priceCents": 3499, "shipCents": 499, "garment": "cream", "sizes": ["One Size"],
+      "situ": "/mockups/luxe-situ-cap-lesbian.webp",
+      "editions": { "standard": { "image": "/designs/luxe-cap-lesbian.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "cap", "color": "Stone", "placement": "embroidery_front" }
+    },
+    {
+      "id": "luxe-queer-cap", "section": "caps", "luxe": true,
+      "name": "Ocean Drive Queer Cap — Luxe",
+      "tagline": "muted rainbow + lavender, lavender neon",
+      "priceCents": 3499, "shipCents": 499, "garment": "teal", "sizes": ["One Size"],
+      "situ": "/mockups/luxe-situ-cap-queer.webp",
+      "editions": { "standard": { "image": "/designs/luxe-cap-queer.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "cap", "color": "Spruce", "placement": "embroidery_front" }
+    },
+    {
+      "id": "luxe-ally", "section": "tees", "luxe": true,
+      "name": "Official Ally — Ocean Drive Luxe",
+      "tagline": "deco drive neon-spray, refined",
+      "priceCents": 3699, "shipCents": 499, "garment": "teal",
+      "sizes": ["S", "M", "L", "XL", "2XL", "3XL"],
+      "situ": "/mockups/luxe-situ-tee-ally.webp",
+      "editions": { "standard": { "image": "/designs/luxe-tee-ally.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "tshirt", "color": "Teal", "placement": "front" }
+    },
+    {
+      "id": "luxe-straight-mate", "section": "tees", "luxe": true,
+      "name": "Official Straight Mate — Ocean Drive Luxe",
+      "tagline": "gold VERIFIED seal included",
+      "priceCents": 3699, "shipCents": 499, "garment": "cream",
+      "sizes": ["S", "M", "L", "XL", "2XL", "3XL"],
+      "situ": "/mockups/luxe-situ-tee-straightmate.webp",
+      "editions": { "standard": { "image": "/designs/luxe-tee-straightmate.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "tshirt", "color": "Natural", "placement": "front" }
+    },
+    {
+      "id": "luxe-fan", "section": "tees", "luxe": true,
+      "name": "Official Fan — Ocean Drive Luxe",
+      "tagline": "violet neon, gold heart",
+      "priceCents": 3699, "shipCents": 499, "garment": "navy",
+      "sizes": ["S", "M", "L", "XL", "2XL", "3XL"],
+      "situ": "/mockups/luxe-situ-tee-fan.webp",
+      "editions": { "standard": { "image": "/designs/luxe-tee-fan.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "tshirt", "color": "Navy", "placement": "front" }
+    },
+    {
+      "id": "luxe-tears-mug", "section": "mugs", "luxe": true,
+      "name": "Tears of Conservatives — Ocean Drive Luxe",
+      "tagline": "gold coupe gauge: getting there → delicious → fully hydrated",
+      "priceCents": 2299, "shipCents": 699, "garment": "white", "sizes": ["11 oz"],
+      "situ": "/mockups/luxe-situ-mug.webp",
+      "editions": { "standard": { "image": "/designs/luxe-mug-wrap.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "mug", "color": "White", "placement": "default" }
+    },
+    {
+      "id": "luxe-space-rock-sticker", "section": "stickers", "luxe": true,
+      "name": "Space Rock 2026 — Luxe Campaign Sticker",
+      "tagline": "make an impact, elegantly (also the luxe vote-shirt back)",
+      "priceCents": 699, "shipCents": 429, "garment": "white", "sizes": ["3\" × 4\""],
+      "situ": "/mockups/luxe-situ-spacerock.webp",
+      "editions": { "standard": { "image": "/designs/luxe-spacerock.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "sticker", "color": "White", "placement": "default" }
     }
   ]
 }
