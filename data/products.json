@@ -13,6 +13,7 @@
       "tagline": "satire • my own opinion • for entertainment purposes only",
       "priceCents": 2999, "shipCents": 499, "garment": "cream",
       "sizes": ["S", "M", "L", "XL", "2XL", "3XL"], "twoSided": true,
+      "situ": "/mockups/a2-situ-allegedly-tee.webp",
       "editions": { "standard": { "image": "/designs/a2-tee-allegedly.png", "back": "/designs/a2-back-logo.png" } },
       "unifiedEdition": true,
       "pf": { "type": "tshirt", "color": "Natural", "placement": "front+back" }
@@ -23,6 +24,7 @@
       "tagline": "glossy certification, sparkle included",
       "priceCents": 2999, "shipCents": 499, "garment": "black",
       "sizes": ["S", "M", "L", "XL", "2XL", "3XL"], "twoSided": true,
+      "situ": "/mockups/a2-situ-fan-tee.webp",
       "editions": { "standard": { "image": "/designs/a2-tee-fan.png", "back": "/designs/a2-back-logo.png" } },
       "unifiedEdition": true,
       "pf": { "type": "tshirt", "color": "Black", "placement": "front+back" }
@@ -33,6 +35,7 @@
       "tagline": "palms, deco hotels, and full fabulosity",
       "priceCents": 2999, "shipCents": 499, "garment": "black",
       "sizes": ["S", "M", "L", "XL", "2XL", "3XL"], "twoSided": true,
+      "situ": "/mockups/a2-situ-fan-fancy-tee.webp",
       "editions": { "standard": { "image": "/designs/a2-tee-fan-fancy.png", "back": "/designs/a2-back-logo.png" } },
       "unifiedEdition": true,
       "pf": { "type": "tshirt", "color": "Black", "placement": "front+back" }
@@ -43,6 +46,7 @@
       "tagline": "his signature greeting, on a shirt",
       "priceCents": 2999, "shipCents": 499, "garment": "navy",
       "sizes": ["S", "M", "L", "XL", "2XL", "3XL"], "twoSided": true,
+      "situ": "/mockups/a2-situ-good-morning-tee.webp",
       "editions": { "standard": { "image": "/designs/a2-tee-good-morning.png", "back": "/designs/a2-back-logo.png" } },
       "unifiedEdition": true,
       "pf": { "type": "tshirt", "color": "Navy", "placement": "front+back" }
@@ -53,6 +57,7 @@
       "tagline": "the man, the myth, the lockup",
       "priceCents": 2999, "shipCents": 499, "garment": "cream",
       "sizes": ["S", "M", "L", "XL", "2XL", "3XL"], "twoSided": true,
+      "situ": "/mockups/a2-situ-logo-tee.webp",
       "editions": { "standard": { "image": "/designs/a2-tee-logo.png", "back": "/designs/a2-back-logo.png" } },
       "unifiedEdition": true,
       "pf": { "type": "tshirt", "color": "Natural", "placement": "front+back" }
@@ -63,6 +68,7 @@
       "tagline": "the rainbow seal, certified",
       "priceCents": 2999, "shipCents": 499, "garment": "black",
       "sizes": ["S", "M", "L", "XL", "2XL", "3XL"], "twoSided": true,
+      "situ": "/mockups/a2-situ-seal-tee.webp",
       "editions": { "standard": { "image": "/designs/a2-tee-seal.png", "back": "/designs/a2-back-logo.png" } },
       "unifiedEdition": true,
       "pf": { "type": "tshirt", "color": "Black", "placement": "front+back" }
@@ -73,6 +79,7 @@
       "tagline": "as not heard on television",
       "priceCents": 2999, "shipCents": 499, "garment": "teal",
       "sizes": ["S", "M", "L", "XL", "2XL"], "twoSided": true,
+      "situ": "/mockups/a2-situ-mutetv-tee.webp",
       "editions": { "standard": { "image": "/designs/a2-tee-mutetv.png", "back": "/designs/a2-back-logo.png" } },
       "unifiedEdition": true,
       "pf": { "type": "tshirt", "color": "Teal", "placement": "front+back" }
@@ -83,6 +90,7 @@
       "tagline": "the official campaign seal",
       "priceCents": 2999, "shipCents": 499, "garment": "white",
       "sizes": ["S", "M", "L", "XL", "2XL", "3XL"], "twoSided": true,
+      "situ": "/mockups/a2-situ-space-rock-tee.webp",
       "editions": { "standard": { "image": "/designs/a2-tee-space-rock.png", "back": "/designs/a2-back-logo.png" } },
       "unifiedEdition": true,
       "pf": { "type": "tshirt", "color": "White", "placement": "front+back" }
@@ -93,6 +101,7 @@
       "tagline": "Federally Fabulous",
       "priceCents": 2999, "shipCents": 499, "garment": "black",
       "sizes": ["S", "M", "L", "XL", "2XL", "3XL"], "twoSided": true,
+      "situ": "/mockups/a2-situ-togayto-tee.webp",
       "editions": { "standard": { "image": "/designs/a2-tee-togayto.png", "back": "/designs/a2-back-logo.png" } },
       "unifiedEdition": true,
       "pf": { "type": "tshirt", "color": "Black", "placement": "front+back" }
@@ -102,6 +111,7 @@
       "name": "Good Morning I'm Gay Cap",
       "tagline": "printed front • embroidered T.O.G. mark on the side",
       "priceCents": 2799, "shipCents": 499, "garment": "mint", "sizes": ["One Size"],
+      "situ": "/mockups/a2-situ-good-morning-cap.webp",
       "editions": { "standard": { "image": "/designs/a2-cap-good-morning.png" } },
       "unifiedEdition": true,
       "pf": { "type": "cap_print", "color": "Pastel Mint", "placement": "front_dtf_hat", "sideLogo": "/designs/a2-cap-side-logo.png" }
@@ -111,6 +121,7 @@
       "name": "T.O.G. Seal Cap",
       "tagline": "the rainbow seal, printed front • embroidered mark on the side",
       "priceCents": 2799, "shipCents": 499, "garment": "mint", "sizes": ["One Size"],
+      "situ": "/mockups/a2-situ-seal-cap.webp",
       "editions": { "standard": { "image": "/designs/a2-cap-seal.png" } },
       "unifiedEdition": true,
       "pf": { "type": "cap_print", "color": "Pastel Mint", "placement": "front_dtf_hat", "sideLogo": "/designs/a2-cap-side-logo.png" }
@@ -120,6 +131,7 @@
       "name": "Filled With MAGA Tears",
       "tagline": "editorial elegance, salty contents",
       "priceCents": 1799, "shipCents": 699, "garment": "white", "sizes": ["11 oz"],
+      "situ": "/mockups/a2-situ-maga-tears-mug.webp",
       "editions": { "standard": { "image": "/designs/a2-mug-maga-tears.png" } },
       "unifiedEdition": true,
       "pf": { "type": "mug", "color": "White", "placement": "default" }
@@ -138,6 +150,7 @@
       "name": "Too Gay To Fail Mug",
       "tagline": "federally fabulous, both sides",
       "priceCents": 1799, "shipCents": 699, "garment": "white", "sizes": ["11 oz"],
+      "situ": "/mockups/a2-situ-togayto-mug.webp",
       "editions": { "standard": { "image": "/designs/a2-mug-togayto.png" } },
       "unifiedEdition": true,
       "pf": { "type": "mug", "color": "White", "placement": "default" }
@@ -147,6 +160,7 @@
       "name": "ALLEGEDLY* Sticker",
       "tagline": "with the rainbow halo",
       "priceCents": 499, "shipCents": 429, "garment": "white", "sizes": ["3\" × 3\""],
+      "situ": "/mockups/a2-situ-allegedly-sticker.webp",
       "editions": { "standard": { "image": "/designs/a2-sticker-allegedly.png" } },
       "unifiedEdition": true,
       "pf": { "type": "sticker", "color": "White", "placement": "default" }
@@ -156,6 +170,7 @@
       "name": "Official Fan Sticker",
       "tagline": "certification, kiss-cut",
       "priceCents": 499, "shipCents": 429, "garment": "white", "sizes": ["3\" × 3\""],
+      "situ": "/mockups/a2-situ-fan-sticker.webp",
       "editions": { "standard": { "image": "/designs/a2-sticker-fan.png" } },
       "unifiedEdition": true,
       "pf": { "type": "sticker", "color": "White", "placement": "default" }
@@ -165,6 +180,7 @@
       "name": "T.O.G. Seal Sticker",
       "tagline": "THE logo, kiss-cut",
       "priceCents": 499, "shipCents": 429, "garment": "white", "sizes": ["3\" × 3\""],
+      "situ": "/mockups/a2-situ-seal-sticker.webp",
       "editions": { "standard": { "image": "/designs/a2-sticker-seal.png" } },
       "unifiedEdition": true,
       "pf": { "type": "sticker", "color": "White", "placement": "default" }
@@ -174,6 +190,7 @@
       "name": "Boc Boc Boc Sticker",
       "tagline": "the calm one",
       "priceCents": 499, "shipCents": 429, "garment": "white", "sizes": ["3\" × 3\""],
+      "situ": "/mockups/a2-situ-mutetv-sticker.webp",
       "editions": { "standard": { "image": "/designs/a2-sticker-mutetv.png" } },
       "unifiedEdition": true,
       "pf": { "type": "sticker", "color": "White", "placement": "default" }
@@ -183,6 +200,7 @@
       "name": "Boc Boc Breakthrough Sticker",
       "tagline": "the chaotic one — rooster exits the TV",
       "priceCents": 499, "shipCents": 429, "garment": "white", "sizes": ["3\" × 3\""],
+      "situ": "/mockups/a2-situ-mutetv-boc-sticker.webp",
       "editions": { "standard": { "image": "/designs/a2-sticker-mutetv-boc.png" } },
       "unifiedEdition": true,
       "pf": { "type": "sticker", "color": "White", "placement": "default" }
@@ -192,6 +210,7 @@
       "name": "Space Rock Comet Sticker",
       "tagline": "make an impact — the cute one",
       "priceCents": 499, "shipCents": 429, "garment": "white", "sizes": ["3\" × 3\""],
+      "situ": "/mockups/a2-situ-space-rock-comet-sticker.webp",
       "editions": { "standard": { "image": "/designs/a2-sticker-space-rock-comet.png" } },
       "unifiedEdition": true,
       "pf": { "type": "sticker", "color": "White", "placement": "default" }
@@ -201,6 +220,7 @@
       "name": "Space Rock 2026 Campaign Seal Sticker",
       "tagline": "the official campaign badge",
       "priceCents": 499, "shipCents": 429, "garment": "white", "sizes": ["3\" × 3\""],
+      "situ": "/mockups/a2-situ-space-rock-sticker.webp",
       "editions": { "standard": { "image": "/designs/a2-sticker-space-rock.png" } },
       "unifiedEdition": true,
       "pf": { "type": "sticker", "color": "White", "placement": "default" }
@@ -210,6 +230,7 @@
       "name": "Too Gay To Fail Sticker",
       "tagline": "federally fabulous, kiss-cut",
       "priceCents": 499, "shipCents": 429, "garment": "white", "sizes": ["3\" × 3\""],
+      "situ": "/mockups/a2-situ-togayto-sticker.webp",
       "editions": { "standard": { "image": "/designs/a2-sticker-togayto.png" } },
       "unifiedEdition": true,
       "pf": { "type": "sticker", "color": "White", "placement": "default" }

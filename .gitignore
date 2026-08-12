@@ -8,3 +8,4 @@ out/
 *.log
 
 .vercel
+.env*
