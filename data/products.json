@@ -116,24 +116,6 @@
       "pf": { "type": "cap_print", "color": "Black", "placement": "default", "sideLogo": "/designs/a2-cap-side-logo.png" }
     },
     {
-      "id": "lesbian-cap", "section": "caps",
-      "name": "The Official Lesbian Cap",
-      "tagline": "embroidered patch front • mark on the side",
-      "priceCents": 2799, "shipCents": 499, "garment": "black", "sizes": ["One Size"],
-      "editions": { "standard": { "image": "/designs/a2-cap-lesbian.png" } },
-      "unifiedEdition": true,
-      "pf": { "type": "cap", "color": "Black", "placement": "embroidery_front", "sideLogo": "/designs/a2-cap-side-logo.png" }
-    },
-    {
-      "id": "lesbian-cap-fancy", "section": "caps",
-      "name": "The Official Lesbian Cap — Ornate",
-      "tagline": "gold scrollwork + gems, embroidered front",
-      "priceCents": 2799, "shipCents": 499, "garment": "black", "sizes": ["One Size"],
-      "editions": { "standard": { "image": "/designs/a2-cap-lesbian-fancy.png" } },
-      "unifiedEdition": true,
-      "pf": { "type": "cap", "color": "Black", "placement": "embroidery_front", "sideLogo": "/designs/a2-cap-side-logo.png" }
-    },
-    {
       "id": "maga-tears-mug", "section": "mugs",
       "name": "Filled With MAGA Tears",
       "tagline": "editorial elegance, salty contents",
