@@ -16,12 +16,14 @@ export default async function Home() {
           time, only when you order. Most designs come in two editions:
           <strong> Standard</strong> or <strong>Ethical ✦</strong> (labeled AI art from
           consenting sources only, lettering hand-set by actual fonts with actual
-          licenses).
+          licenses). And it all gives back: <strong>5% of all proceeds go to a gay
+          charity of TOG&rsquo;s choosing.</strong>
         </p>
         <div className="badge-row">
           <span className="pill">PRINTED PER ORDER</span>
           <span className="pill alt">CERTIFIED ✦ AUTHENTIC</span>
           <span className="pill alt2">ETHICAL EDITION AVAILABLE</span>
+          <span className="pill charity">5% TO A GAY CHARITY</span>
         </div>
       </section>
 

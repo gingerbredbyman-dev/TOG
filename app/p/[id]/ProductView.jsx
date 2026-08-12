@@ -73,6 +73,9 @@ export default function ProductView({ product }) {
         <h1>{product.name}</h1>
         <p className="pp-tag">{product.tagline}</p>
         <div className="pp-price">{formatPrice(product.priceCents)}</div>
+        <p className="charity-note">
+          🏳️‍🌈 5% of all proceeds go to a gay charity of TOG&rsquo;s choosing.
+        </p>
 
         {hasToggle && (
           <>
