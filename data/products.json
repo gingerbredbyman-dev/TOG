@@ -197,19 +197,6 @@
       "pf": { "type": "cap", "color": "Black", "placement": "embroidery_front" }
     },
     {
-      "id": "lesbian-cap",
-      "section": "caps",
-      "name": "The Official Lesbian Cap",
-      "tagline": "sunset bars",
-      "priceCents": 2799,
-      "shipCents": 499,
-      "garment": "cream",
-      "sizes": ["One Size"],
-      "editions": { "standard": { "image": "/designs/cap-lesbian.png" } },
-      "unifiedEdition": true,
-      "pf": { "type": "cap", "color": "Stone", "placement": "embroidery_front" }
-    },
-    {
       "id": "queer-cap",
       "section": "caps",
       "name": "The Official Queer Cap",
@@ -305,16 +292,6 @@
       "editions": { "standard": { "image": "/designs/luxe-cap-asexual.png" } },
       "unifiedEdition": true,
       "pf": { "type": "cap", "color": "Black", "placement": "embroidery_front" }
-    },
-    {
-      "id": "luxe-lesbian-cap", "section": "caps", "luxe": true,
-      "name": "Ocean Drive Lesbian Cap — Luxe",
-      "tagline": "sunset rose • apricot • wine enamel",
-      "priceCents": 3499, "shipCents": 499, "garment": "cream", "sizes": ["One Size"],
-      "situ": "/mockups/luxe-situ-cap-lesbian.webp",
-      "editions": { "standard": { "image": "/designs/luxe-cap-lesbian.png" } },
-      "unifiedEdition": true,
-      "pf": { "type": "cap", "color": "Stone", "placement": "embroidery_front" }
     },
     {
       "id": "luxe-queer-cap", "section": "caps", "luxe": true,
