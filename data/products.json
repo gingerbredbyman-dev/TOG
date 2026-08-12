@@ -1,22 +1,236 @@
 {
   "currency": "usd",
   "sections": [
-    {
-      "id": "tees",
-      "title": "Tees"
-    },
-    {
-      "id": "caps",
-      "title": "The Official Caps"
-    },
-    {
-      "id": "mugs",
-      "title": "Mug"
-    },
-    {
-      "id": "stickers",
-      "title": "Stickers"
-    }
+    { "id": "tees", "title": "Tees" },
+    { "id": "caps", "title": "The Official Caps" },
+    { "id": "mugs", "title": "Mugs" },
+    { "id": "stickers", "title": "Stickers" }
   ],
-  "products": []
+  "products": [
+    {
+      "id": "allegedly-tee", "section": "tees",
+      "name": "ALLEGEDLY*",
+      "tagline": "satire • my own opinion • for entertainment purposes only",
+      "priceCents": 2999, "shipCents": 499, "garment": "cream",
+      "sizes": ["S", "M", "L", "XL", "2XL", "3XL"], "twoSided": true,
+      "editions": { "standard": { "image": "/designs/a2-tee-allegedly.png", "back": "/designs/a2-back-logo.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "tshirt", "color": "Natural", "placement": "front+back" }
+    },
+    {
+      "id": "fan-tee", "section": "tees",
+      "name": "Official Fan of The Official Gay Guy",
+      "tagline": "glossy certification, sparkle included",
+      "priceCents": 2999, "shipCents": 499, "garment": "black",
+      "sizes": ["S", "M", "L", "XL", "2XL", "3XL"], "twoSided": true,
+      "editions": { "standard": { "image": "/designs/a2-tee-fan.png", "back": "/designs/a2-back-logo.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "tshirt", "color": "Black", "placement": "front+back" }
+    },
+    {
+      "id": "fan-fancy-tee", "section": "tees",
+      "name": "Official Fan — Deco Deluxe",
+      "tagline": "palms, deco hotels, and full fabulosity",
+      "priceCents": 2999, "shipCents": 499, "garment": "black",
+      "sizes": ["S", "M", "L", "XL", "2XL", "3XL"], "twoSided": true,
+      "editions": { "standard": { "image": "/designs/a2-tee-fan-fancy.png", "back": "/designs/a2-back-logo.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "tshirt", "color": "Black", "placement": "front+back" }
+    },
+    {
+      "id": "good-morning-tee", "section": "tees",
+      "name": "Good Morning I'm Gay",
+      "tagline": "his signature greeting, on a shirt",
+      "priceCents": 2999, "shipCents": 499, "garment": "navy",
+      "sizes": ["S", "M", "L", "XL", "2XL", "3XL"], "twoSided": true,
+      "editions": { "standard": { "image": "/designs/a2-tee-good-morning.png", "back": "/designs/a2-back-logo.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "tshirt", "color": "Navy", "placement": "front+back" }
+    },
+    {
+      "id": "logo-tee", "section": "tees",
+      "name": "The Official Gay Guy Tee",
+      "tagline": "the man, the myth, the lockup",
+      "priceCents": 2999, "shipCents": 499, "garment": "cream",
+      "sizes": ["S", "M", "L", "XL", "2XL", "3XL"], "twoSided": true,
+      "editions": { "standard": { "image": "/designs/a2-tee-logo.png", "back": "/designs/a2-back-logo.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "tshirt", "color": "Natural", "placement": "front+back" }
+    },
+    {
+      "id": "seal-tee", "section": "tees",
+      "name": "T.O.G. Seal Tee",
+      "tagline": "the rainbow seal, certified",
+      "priceCents": 2999, "shipCents": 499, "garment": "black",
+      "sizes": ["S", "M", "L", "XL", "2XL", "3XL"], "twoSided": true,
+      "editions": { "standard": { "image": "/designs/a2-tee-seal.png", "back": "/designs/a2-back-logo.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "tshirt", "color": "Black", "placement": "front+back" }
+    },
+    {
+      "id": "mutetv-tee", "section": "tees",
+      "name": "Boc Boc Boc on #MuteTV",
+      "tagline": "as not heard on television",
+      "priceCents": 2999, "shipCents": 499, "garment": "teal",
+      "sizes": ["S", "M", "L", "XL", "2XL", "3XL"], "twoSided": true,
+      "editions": { "standard": { "image": "/designs/a2-tee-mutetv.png", "back": "/designs/a2-back-logo.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "tshirt", "color": "Teal", "placement": "front+back" }
+    },
+    {
+      "id": "space-rock-tee", "section": "tees",
+      "name": "Space Rock 2026",
+      "tagline": "the official campaign seal",
+      "priceCents": 2999, "shipCents": 499, "garment": "white",
+      "sizes": ["S", "M", "L", "XL", "2XL", "3XL"], "twoSided": true,
+      "editions": { "standard": { "image": "/designs/a2-tee-space-rock.png", "back": "/designs/a2-back-logo.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "tshirt", "color": "White", "placement": "front+back" }
+    },
+    {
+      "id": "togayto-tee", "section": "tees",
+      "name": "Too Gay To Fail",
+      "tagline": "Federally Fabulous",
+      "priceCents": 2999, "shipCents": 499, "garment": "black",
+      "sizes": ["S", "M", "L", "XL", "2XL", "3XL"], "twoSided": true,
+      "editions": { "standard": { "image": "/designs/a2-tee-togayto.png", "back": "/designs/a2-back-logo.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "tshirt", "color": "Black", "placement": "front+back" }
+    },
+    {
+      "id": "good-morning-cap", "section": "caps",
+      "name": "Good Morning I'm Gay Cap",
+      "tagline": "printed front • T.O.G. mark on the side",
+      "priceCents": 2799, "shipCents": 499, "garment": "navy", "sizes": ["One Size"],
+      "editions": { "standard": { "image": "/designs/a2-cap-good-morning.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "cap_print", "color": "Navy", "placement": "default", "sideLogo": "/designs/a2-cap-side-logo.png" }
+    },
+    {
+      "id": "seal-cap", "section": "caps",
+      "name": "T.O.G. Seal Cap",
+      "tagline": "the rainbow seal, printed front • mark on the side",
+      "priceCents": 2799, "shipCents": 499, "garment": "black", "sizes": ["One Size"],
+      "editions": { "standard": { "image": "/designs/a2-cap-seal.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "cap_print", "color": "Black", "placement": "default", "sideLogo": "/designs/a2-cap-side-logo.png" }
+    },
+    {
+      "id": "lesbian-cap", "section": "caps",
+      "name": "The Official Lesbian Cap",
+      "tagline": "embroidered patch front • mark on the side",
+      "priceCents": 2799, "shipCents": 499, "garment": "black", "sizes": ["One Size"],
+      "editions": { "standard": { "image": "/designs/a2-cap-lesbian.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "cap", "color": "Black", "placement": "embroidery_front", "sideLogo": "/designs/a2-cap-side-logo.png" }
+    },
+    {
+      "id": "lesbian-cap-fancy", "section": "caps",
+      "name": "The Official Lesbian Cap — Ornate",
+      "tagline": "gold scrollwork + gems, embroidered front",
+      "priceCents": 2799, "shipCents": 499, "garment": "black", "sizes": ["One Size"],
+      "editions": { "standard": { "image": "/designs/a2-cap-lesbian-fancy.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "cap", "color": "Black", "placement": "embroidery_front", "sideLogo": "/designs/a2-cap-side-logo.png" }
+    },
+    {
+      "id": "maga-tears-mug", "section": "mugs",
+      "name": "Filled With MAGA Tears",
+      "tagline": "editorial elegance, salty contents",
+      "priceCents": 1799, "shipCents": 699, "garment": "white", "sizes": ["11 oz"],
+      "editions": { "standard": { "image": "/designs/a2-mug-maga-tears.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "mug", "color": "White", "placement": "default" }
+    },
+    {
+      "id": "maga-tears-fancy-mug", "section": "mugs",
+      "name": "Filled With MAGA Tears — Deco Deluxe",
+      "tagline": "full art-deco wrap: palms, suns, teardrops",
+      "priceCents": 1799, "shipCents": 699, "garment": "white", "sizes": ["11 oz"],
+      "editions": { "standard": { "image": "/designs/a2-mug-maga-tears-fancy.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "mug", "color": "White", "placement": "default" }
+    },
+    {
+      "id": "togayto-mug", "section": "mugs",
+      "name": "Too Gay To Fail Mug",
+      "tagline": "federally fabulous, both sides",
+      "priceCents": 1799, "shipCents": 699, "garment": "white", "sizes": ["11 oz"],
+      "editions": { "standard": { "image": "/designs/a2-mug-togayto.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "mug", "color": "White", "placement": "default" }
+    },
+    {
+      "id": "allegedly-sticker", "section": "stickers",
+      "name": "ALLEGEDLY* Sticker",
+      "tagline": "with the rainbow halo",
+      "priceCents": 499, "shipCents": 429, "garment": "white", "sizes": ["3\" × 3\""],
+      "editions": { "standard": { "image": "/designs/a2-sticker-allegedly.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "sticker", "color": "White", "placement": "default" }
+    },
+    {
+      "id": "fan-sticker", "section": "stickers",
+      "name": "Official Fan Sticker",
+      "tagline": "certification, kiss-cut",
+      "priceCents": 499, "shipCents": 429, "garment": "white", "sizes": ["3\" × 3\""],
+      "editions": { "standard": { "image": "/designs/a2-sticker-fan.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "sticker", "color": "White", "placement": "default" }
+    },
+    {
+      "id": "seal-sticker", "section": "stickers",
+      "name": "T.O.G. Seal Sticker",
+      "tagline": "THE logo, kiss-cut",
+      "priceCents": 499, "shipCents": 429, "garment": "white", "sizes": ["3\" × 3\""],
+      "editions": { "standard": { "image": "/designs/a2-sticker-seal.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "sticker", "color": "White", "placement": "default" }
+    },
+    {
+      "id": "mutetv-sticker", "section": "stickers",
+      "name": "Boc Boc Boc Sticker",
+      "tagline": "the calm one",
+      "priceCents": 499, "shipCents": 429, "garment": "white", "sizes": ["3\" × 3\""],
+      "editions": { "standard": { "image": "/designs/a2-sticker-mutetv.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "sticker", "color": "White", "placement": "default" }
+    },
+    {
+      "id": "mutetv-boc-sticker", "section": "stickers",
+      "name": "Boc Boc Breakthrough Sticker",
+      "tagline": "the chaotic one — rooster exits the TV",
+      "priceCents": 499, "shipCents": 429, "garment": "white", "sizes": ["3\" × 3\""],
+      "editions": { "standard": { "image": "/designs/a2-sticker-mutetv-boc.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "sticker", "color": "White", "placement": "default" }
+    },
+    {
+      "id": "space-rock-comet-sticker", "section": "stickers",
+      "name": "Space Rock Comet Sticker",
+      "tagline": "make an impact — the cute one",
+      "priceCents": 499, "shipCents": 429, "garment": "white", "sizes": ["3\" × 3\""],
+      "editions": { "standard": { "image": "/designs/a2-sticker-space-rock-comet.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "sticker", "color": "White", "placement": "default" }
+    },
+    {
+      "id": "space-rock-sticker", "section": "stickers",
+      "name": "Space Rock 2026 Campaign Seal Sticker",
+      "tagline": "the official campaign badge",
+      "priceCents": 499, "shipCents": 429, "garment": "white", "sizes": ["3\" × 3\""],
+      "editions": { "standard": { "image": "/designs/a2-sticker-space-rock.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "sticker", "color": "White", "placement": "default" }
+    },
+    {
+      "id": "togayto-sticker", "section": "stickers",
+      "name": "Too Gay To Fail Sticker",
+      "tagline": "federally fabulous, kiss-cut",
+      "priceCents": 499, "shipCents": 429, "garment": "white", "sizes": ["3\" × 3\""],
+      "editions": { "standard": { "image": "/designs/a2-sticker-togayto.png" } },
+      "unifiedEdition": true,
+      "pf": { "type": "sticker", "color": "White", "placement": "default" }
+    }
+  ]
 }

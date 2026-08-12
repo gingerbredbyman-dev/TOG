@@ -168,6 +168,9 @@ for (const p of catalog.products) {
             : "default";
       const files = [{ type: primaryType, url: `${ORIGIN}${spec.image}` }];
       if (p.twoSided && spec.back) files.push({ type: "back", url: `${ORIGIN}${spec.back}` });
+      // Small brand mark on the cap's left side (embroidered caps only).
+      if (p.pf.sideLogo && p.pf.type === "cap")
+        files.push({ type: "embroidery_left", url: `${ORIGIN}${p.pf.sideLogo}` });
       sync_variants.push({
         retail_price: (p.priceCents / 100).toFixed(2),
         variant_id: v.id,

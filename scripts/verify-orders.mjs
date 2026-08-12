@@ -72,6 +72,8 @@ for (const p of seed.products) {
   }
   if (p.situ && !existsSync(join(ROOT, "public", p.situ.replace(/^\//, ""))))
     say("WARN", p.id, `situ image missing: ${p.situ}`);
+  if (p.pf?.sideLogo && !existsSync(join(ROOT, "public", p.pf.sideLogo.replace(/^\//, ""))))
+    say("FAIL", p.id, `sideLogo file missing: ${p.pf.sideLogo}`);
 }
 
 console.log(`\nverify-orders: ${fail} FAIL, ${warn} WARN across ${seed.products.length} products`);
