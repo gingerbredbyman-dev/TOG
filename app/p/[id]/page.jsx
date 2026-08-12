@@ -1,9 +1,11 @@
 import { getProduct } from "../../../lib/catalog";
 import ProductView from "./ProductView";
 
+export const dynamic = "force-dynamic";
+
 export default async function ProductPage({ params }) {
   const { id } = await params;
-  const product = getProduct(id);
+  const product = await getProduct(id);
   if (!product || product.comingSoon) {
     return (
       <main className="success-wrap">
@@ -14,5 +16,5 @@ export default async function ProductPage({ params }) {
       </main>
     );
   }
-  return <ProductView product={product} />;
+  return <ProductView key={product.id} product={product} />;
 }

@@ -1,7 +1,10 @@
-import { allSections, formatPrice } from "../lib/catalog";
+import { allSections } from "../lib/catalog";
+import { formatPrice, webPath } from "../lib/format";
 
-export default function Home() {
-  const sections = allSections();
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const sections = await allSections();
   return (
     <main>
       <section className="hero">
@@ -11,8 +14,9 @@ export default function Home() {
         <p>
           Tees, caps, mugs and stickers from The Official Gay Guy — printed one at a
           time, only when you order. Most designs come in two editions:
-          <strong> Standard</strong> or <strong>Ethical</strong> (art from consenting
-          sources only, lettering hand-set by humans-adjacent hands).
+          <strong> Standard</strong> or <strong>Ethical ✦</strong> (labeled AI art from
+          consenting sources only, lettering hand-set by actual fonts with actual
+          licenses).
         </p>
         <div className="badge-row">
           <span className="pill">PRINTED PER ORDER</span>
@@ -27,11 +31,15 @@ export default function Home() {
           <div className="grid">
             {s.products.map((p) => {
               const firstEdition = p.editions.standard || Object.values(p.editions)[0];
+              const ethicalOnly = !p.editions.standard;
+              const cardImg = p.situ || webPath(firstEdition.image);
               const card = (
                 <div className={`card ${p.comingSoon ? "soon" : ""}`}>
                   {p.comingSoon && <span className="soon-badge">SOON</span>}
+                  {p.luxe && !p.comingSoon && <span className="luxe-badge">LUXE ✦</span>}
+                  {ethicalOnly && <span className="eth-chip">ETHICAL AI ✦</span>}
                   <div className={`card-img garment-${p.garment || "white"}`}>
-                    <img src={firstEdition.image} alt={p.name} loading="lazy" />
+                    <img src={cardImg} alt={p.name} loading="lazy" />
                   </div>
                   <div className="card-body">
                     <h3>{p.name}</h3>

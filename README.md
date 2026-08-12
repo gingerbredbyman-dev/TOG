@@ -1,4 +1,8 @@
-# tog-store — The Official Gay Guy merch storefront
+# The Official Gay Guy Shop (tog-store)
+
+**Florida · a 50/50 partner project** — revenue splits 50/50 between Mike (The
+Official Gay Guy) and Austin. Stripe lands everything in Mike's account; settle the
+split monthly (upgrade path if it gets big: Stripe Connect for automatic splits).
 
 Next.js storefront with Stripe Checkout + Printful per-order fulfillment.
 Every product ships in Standard and (mostly) Ethical editions from
@@ -27,16 +31,33 @@ success page. Real mode: copy `.env.example` → `.env.local` and fill keys
   products → variant map in `data/printful-map.json`). `--dry-run` validates.
 - `MIKE-HANDOVER.md` — the owner onboarding doc.
 
-## Launch sequence
+## Admin setup (owner-editable catalog, no code)
+
+`/admin` lets the owner add / edit / hide / delete any product from the browser.
+
+1. Create a Supabase project → SQL editor → run the DDL at the top of
+   `scripts/seed-supabase.mjs` (one `products` table)
+2. Env: `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `ADMIN_PASSWORD`
+3. `node --env-file-if-exists=.env.local scripts/seed-supabase.mjs` (loads the 19
+   current products; safe to re-run)
+4. Visit `/admin`, enter the password. Changes are live instantly — no deploys.
+
+Without Supabase the shop still runs read-only from `data/products.json`.
+
+## Launch sequence (ORDER MATTERS — the variant map is bundled at build time)
 
 1. `npm run sync -- --dry-run` (catalog sanity)
-2. Deploy: `vercel` (preview) → `vercel --prod` once blessed
+2. First deploy: `vercel --prod` (site must be public so Printful can download print files)
 3. Mike: Stripe teammate invite + Printful billing (MIKE-HANDOVER.md)
-4. Set env on Vercel: STRIPE_*, PRINTFUL_*, NEXT_PUBLIC_SITE_URL, DEMO_CHECKOUT=0
+4. Set env on Vercel: STRIPE_*, PRINTFUL_API_KEY, PRINTFUL_STORE_ID,
+   SITE_ORIGIN=https://<domain>, NEXT_PUBLIC_SITE_URL=https://<domain>, remove DEMO_CHECKOUT
 5. Stripe dashboard → Webhooks → add `https://<domain>/api/stripe-webhook`
-   (event: `checkout.session.completed`) → copy signing secret to env
-6. `npm run sync` (creates real Printful products + mockups)
-7. Test-mode order → refund → `FULFILL=on` → real sticker to Mike's house
+   (events: `checkout.session.completed`, `checkout.session.async_payment_succeeded`)
+   → copy signing secret to env
+6. `npm run sync` (creates/updates Printful products) → **commit the regenerated
+   `data/printful-map.json` → `vercel --prod` again** (bundles the fresh map)
+7. Test-mode order → refund → set `FULFILL=on` (+ optional ALERT_NTFY_URL) → redeploy
+   → real sticker order to Mike's house
 
 ## Not yet / later
 
