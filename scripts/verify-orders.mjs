@@ -15,7 +15,7 @@ const seed = JSON.parse(readFileSync(join(ROOT, "data", "products.json"), "utf8"
 const VALID_PLACEMENTS = {
   tshirt: ["front", "front+back"],
   cap: ["embroidery_front"],
-  cap_print: ["default"],
+  cap_print: ["front_dtf_hat"], // PF 481 Beechfield B653: printed front is front_dtf_hat ("default" there = embroidery_front)
   mug: ["default"],
   sticker: ["default"],
 };

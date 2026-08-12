@@ -92,6 +92,7 @@ a { color: inherit; text-decoration: none; }
 .garment-pink { background: #e087b1; }
 .garment-white { background: #d9d7e0; }
 .garment-teal { background: #0e3b43; }
+.garment-mint { background: #bfe6d4; }
 .card-body { padding: 14px 16px 18px; border-top: 2px solid var(--line); background: var(--panel-2); }
 .card-body h3 { font-family: "Archivo Black", sans-serif; font-size: 15px; line-height: 1.35; color: var(--cream); }
 .card-tag { font-size: 11.5px; opacity: .7; margin: 6px 0 10px; line-height: 1.5; }

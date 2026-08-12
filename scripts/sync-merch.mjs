@@ -29,6 +29,9 @@ const PF_CATALOG = {
   tshirt: { productId: 71, mustContain: "3001" },
   mug: { productId: 19, mustContain: "mug" },
   cap: { productId: 662, mustContain: "hat" },
+  // Beechfield B653 — the only PF cap with a printed front (front_dtf_hat)
+  // AND side embroidery placements. Colors are all pastel; no black exists.
+  cap_print: { productId: 481, mustContain: "pastel" },
   sticker: { productId: 358, mustContain: "sticker" },
 };
 
@@ -168,8 +171,10 @@ for (const p of catalog.products) {
             : "default";
       const files = [{ type: primaryType, url: `${ORIGIN}${spec.image}` }];
       if (p.twoSided && spec.back) files.push({ type: "back", url: `${ORIGIN}${spec.back}` });
-      // Small brand mark on the cap's left side (embroidered caps only).
-      if (p.pf.sideLogo && p.pf.type === "cap")
+      // Small brand mark on the cap's left side. Sides are embroidery-only
+      // across Printful's entire cap catalog (no printed-side product exists),
+      // so the mark always ships as embroidery_left — on printed caps too.
+      if (p.pf.sideLogo && (p.pf.type === "cap" || p.pf.type === "cap_print"))
         files.push({ type: "embroidery_left", url: `${ORIGIN}${p.pf.sideLogo}` });
       sync_variants.push({
         retail_price: (p.priceCents / 100).toFixed(2),
