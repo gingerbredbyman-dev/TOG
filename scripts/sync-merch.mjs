@@ -145,7 +145,7 @@ for (const p of catalog.products) {
     const externalId = `${p.id}:${ed}`;
     const editionLabel =
       Object.keys(p.editions).length > 1 && !p.unifiedEdition
-        ? ed === "ethical" ? " — Ethical Edition" : " — Standard Edition"
+        ? ` — ${ed[0].toUpperCase()}${ed.slice(1)} Edition`
         : "";
     const name = `${p.name}${editionLabel}`;
 

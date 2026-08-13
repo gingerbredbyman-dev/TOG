@@ -3,7 +3,7 @@ import "./globals.css";
 export const metadata = {
   title: "The Official Gay Guy Shop",
   description:
-    "The Official Gay Guy Shop — officially certified tees, caps, mugs and stickers, printed per order in the USA. Florida born. Standard or Ethical edition — your call.",
+    "The Official Gay Guy Shop — officially certified tees, caps, mugs and stickers, printed per order in the USA. Florida born. 5% of all proceeds go to a gay charity of TOGG's choosing.",
 };
 
 export default function RootLayout({ children }) {
@@ -40,8 +40,7 @@ export default function RootLayout({ children }) {
           <p className="foot-fine">
             Florida • a 50/50 partner project • every item printed per order — no
             warehouses, no waste • 5% of all proceeds go to a gay charity of TOGG&rsquo;s
-            choosing • Ethical Edition art from consenting sources only • satire • for
-            entertainment purposes only
+            choosing • satire • for entertainment purposes only
           </p>
         </footer>
       </body>
