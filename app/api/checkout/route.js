@@ -55,9 +55,7 @@ export async function POST(req) {
 
   const editionLabel =
     Object.keys(product.editions).length > 1 && !product.unifiedEdition
-      ? edition === "ethical"
-        ? " — Ethical Edition"
-        : " — Standard Edition"
+      ? ` — ${edition[0].toUpperCase()}${edition.slice(1)} Edition`
       : "";
 
   const shipCents = product.shipCents ?? 499;

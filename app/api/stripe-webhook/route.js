@@ -26,8 +26,8 @@ async function alert(msg) {
     try {
       await fetch(process.env.ALERT_NTFY_URL, {
         method: "POST",
-        body: `TOG store: ${msg}`,
-        headers: { Title: "TOG fulfillment", Priority: "high", Tags: "warning" },
+        body: `TOGG store: ${msg}`,
+        headers: { Title: "TOGG fulfillment", Priority: "high", Tags: "warning" },
       });
     } catch {
       /* alerting must never take the webhook down */

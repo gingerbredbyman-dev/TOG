@@ -29,6 +29,9 @@ const PF_CATALOG = {
   tshirt: { productId: 71, mustContain: "3001" },
   mug: { productId: 19, mustContain: "mug" },
   cap: { productId: 662, mustContain: "hat" },
+  // Beechfield B653 — the only PF cap with a printed front (front_dtf_hat)
+  // AND side embroidery placements. Colors are all pastel; no black exists.
+  cap_print: { productId: 481, mustContain: "pastel" },
   sticker: { productId: 358, mustContain: "sticker" },
 };
 
@@ -43,22 +46,30 @@ function sizeMatches(wanted, candidate) {
 }
 
 async function pf(path, opts = {}) {
-  const res = await fetch(API + path, {
-    ...opts,
-    headers: {
-      Authorization: `Bearer ${KEY}`,
-      "X-PF-Store-ID": STORE,
-      "Content-Type": "application/json",
-      ...(opts.headers || {}),
-    },
-  });
-  const json = await res.json().catch(() => ({}));
-  if (!res.ok) {
-    const e = new Error(`${path} -> ${res.status}: ${JSON.stringify(json).slice(0, 300)}`);
-    e.status = res.status;
-    throw e;
+  for (let attempt = 1; ; attempt++) {
+    const res = await fetch(API + path, {
+      ...opts,
+      headers: {
+        Authorization: `Bearer ${KEY}`,
+        "X-PF-Store-ID": STORE,
+        "Content-Type": "application/json",
+        ...(opts.headers || {}),
+      },
+    });
+    const json = await res.json().catch(() => ({}));
+    if (res.status === 429 && attempt <= 6) {
+      const wait = (Number(res.headers.get("retry-after")) || 15) + 2;
+      console.log(`  ~ rate limited, waiting ${wait}s (attempt ${attempt}/6)`);
+      await new Promise((r) => setTimeout(r, wait * 1000));
+      continue;
+    }
+    if (!res.ok) {
+      const e = new Error(`${path} -> ${res.status}: ${JSON.stringify(json).slice(0, 300)}`);
+      e.status = res.status;
+      throw e;
+    }
+    return json.result;
   }
-  return json.result;
 }
 
 const localFile = (publicPath) => join(ROOT, "public", publicPath.replace(/^\//, ""));
@@ -134,7 +145,7 @@ for (const p of catalog.products) {
     const externalId = `${p.id}:${ed}`;
     const editionLabel =
       Object.keys(p.editions).length > 1 && !p.unifiedEdition
-        ? ed === "ethical" ? " — Ethical Edition" : " — Standard Edition"
+        ? ` — ${ed[0].toUpperCase()}${ed.slice(1)} Edition`
         : "";
     const name = `${p.name}${editionLabel}`;
 
@@ -168,10 +179,29 @@ for (const p of catalog.products) {
             : "default";
       const files = [{ type: primaryType, url: `${ORIGIN}${spec.image}` }];
       if (p.twoSided && spec.back) files.push({ type: "back", url: `${ORIGIN}${spec.back}` });
+      // Small brand mark on the cap's left side. Sides are embroidery-only
+      // across Printful's entire cap catalog (no printed-side product exists),
+      // so the mark always ships as embroidery_left — on printed caps too.
+      // Printful requires an explicit thread palette for side embroidery
+      // (thread_colors_left); the mark is black-only.
+      const isCap = p.pf.type === "cap" || p.pf.type === "cap_print";
+      if (p.pf.sideLogo && isCap)
+        files.push({ type: "embroidery_left", url: `${ORIGIN}${p.pf.sideLogo}` });
+      // Printful embroidery rules (learned the hard way, all API-enforced):
+      // full_color exists only on FRONT placements; sides are standard-thread
+      // only; techniques must match across one cap. A side mark therefore
+      // forces flat-thread embroidery everywhere, with explicit variant-level
+      // palettes from Printful's fixed thread list per placement.
+      const capOptions = [];
+      if (isCap && primaryType === "embroidery_front_large")
+        capOptions.push({ id: "thread_colors_front_large", value: p.pf.threadColors || ["#000000", "#FFFFFF"] });
+      if (p.pf.sideLogo && isCap)
+        capOptions.push({ id: "thread_colors_left", value: ["#000000"] });
       sync_variants.push({
         retail_price: (p.priceCents / 100).toFixed(2),
         variant_id: v.id,
         files,
+        ...(capOptions.length ? { options: capOptions } : {}),
         _size: size,
       });
     }
@@ -186,29 +216,37 @@ for (const p of catalog.products) {
       sync_variants: sync_variants.map(({ _size, ...v }) => v),
     };
 
-    let productId;
-    if (existing[externalId]) {
-      const updated = await pf(`/store/products/${existing[externalId]}`, {
-        method: "PUT",
-        body: JSON.stringify(payload),
-      });
-      productId = updated.id;
-      console.log(`updated ${name} (${sync_variants.length} variants)`);
-    } else {
-      const created = await pf(`/store/products`, {
-        method: "POST",
-        body: JSON.stringify(payload),
-      });
-      productId = created.id;
-      console.log(`created ${name} (${sync_variants.length} variants)`);
-    }
+    // One product's API rejection must not abort the whole catalog sync —
+    // log it, count it, keep going (exit code stays non-zero via hardErrors).
+    try {
+      let productId;
+      if (existing[externalId]) {
+        const updated = await pf(`/store/products/${existing[externalId]}`, {
+          method: "PUT",
+          body: JSON.stringify(payload),
+        });
+        productId = updated.id;
+        console.log(`updated ${name} (${sync_variants.length} variants)`);
+      } else {
+        const created = await pf(`/store/products`, {
+          method: "POST",
+          body: JSON.stringify(payload),
+        });
+        productId = created.id;
+        console.log(`created ${name} (${sync_variants.length} variants)`);
+      }
 
-    // Map sizes -> sync variant ids by catalog variant_id (NOT array order —
-    // Printful reorders sync_variants in its responses).
-    const detail = await pf(`/store/products/${productId}`);
-    for (const sv of detail.sync_variants) {
-      const match = sync_variants.find((s) => s.variant_id === sv.variant_id);
-      if (match) map[`${p.id}:${ed}:${match._size}`] = sv.id;
+      // Map sizes -> sync variant ids by catalog variant_id (NOT array order —
+      // Printful reorders sync_variants in its responses).
+      const detail = await pf(`/store/products/${productId}`);
+      for (const sv of detail.sync_variants) {
+        const match = sync_variants.find((s) => s.variant_id === sv.variant_id);
+        if (match) map[`${p.id}:${ed}:${match._size}`] = sv.id;
+      }
+    } catch (err) {
+      console.error(`  !! SYNC FAILED for ${p.id} [${ed}]: ${err.message}`);
+      hardErrors++;
+      continue;
     }
   }
 }

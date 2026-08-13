@@ -4,7 +4,7 @@ import { formatPrice, webPath } from "../../../lib/format";
 
 export default function ProductView({ product }) {
   const editions = Object.keys(product.editions);
-  const [edition, setEdition] = useState(editions[0]);
+  const [edition] = useState(editions[0]);
   const [size, setSize] = useState(product.sizes?.[0] || null);
   const [view, setView] = useState("front"); // front | back | situ
   const [busy, setBusy] = useState(false);
@@ -17,8 +17,6 @@ export default function ProductView({ product }) {
       : view === "back" && ed.back
         ? webPath(ed.back)
         : webPath(ed.image);
-  const hasToggle = editions.length > 1 && !product.unifiedEdition;
-  const isEthical = edition === "ethical";
 
   async function buy() {
     setBusy(true);
@@ -49,7 +47,6 @@ export default function ProductView({ product }) {
     <main className="pp">
       <div>
         <div className={`pp-img garment-${product.garment || "white"}`}>
-          {isEthical && <span className="eth-label">ETHICALLY-SOURCED AI ART ✦</span>}
           <img src={shownImage} alt={product.name} />
         </div>
         {thumbs.length > 1 && (
@@ -73,41 +70,9 @@ export default function ProductView({ product }) {
         <h1>{product.name}</h1>
         <p className="pp-tag">{product.tagline}</p>
         <div className="pp-price">{formatPrice(product.priceCents)}</div>
-
-        {hasToggle && (
-          <>
-            <div className="opt-label">Edition</div>
-            <div className="opt-row">
-              {editions.map((e) => (
-                <button
-                  key={e}
-                  className={`opt ${edition === e ? "sel" : ""}`}
-                  onClick={() => {
-                    setEdition(e);
-                    if (view === "back" && !product.editions[e].back) setView("front");
-                  }}
-                >
-                  {e === "standard" ? "Standard" : "Ethical ✦"}
-                </button>
-              ))}
-            </div>
-            <div className="edition-note">
-              {isEthical ? (
-                <>
-                  <strong>Ethical Edition — labeled AI:</strong> this artwork is
-                  AI-generated from consenting sources only (a model trained
-                  exclusively on public-domain and permissioned works) with lettering
-                  hand-set in open-licensed fonts. Same price — your values, your call.
-                </>
-              ) : (
-                <>
-                  <strong>Standard Edition:</strong> the flagship artwork. Prefer
-                  AI art from consenting sources only? Flip to Ethical ✦ — same price.
-                </>
-              )}
-            </div>
-          </>
-        )}
+        <p className="charity-note">
+          🏳️‍🌈 5% of all proceeds go to a gay charity of TOGG&rsquo;s choosing.
+        </p>
 
         {product.sizes && product.sizes.length > 1 && (
           <>

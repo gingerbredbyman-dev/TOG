@@ -6,3 +6,6 @@ out/
 !.env.example
 .vercel
 *.log
+
+.vercel
+.env*

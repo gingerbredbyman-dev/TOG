@@ -15,7 +15,10 @@ const seed = JSON.parse(readFileSync(join(ROOT, "data", "products.json"), "utf8"
 const VALID_PLACEMENTS = {
   tshirt: ["front", "front+back"],
   cap: ["embroidery_front"],
-  cap_print: ["default"],
+  // PF 481 Beechfield B653. Techniques are exclusive per cap: DTF gives only
+  // front_dtf_hat (no sides); EMBROIDERY gives embroidery_front_large + sides.
+  // Line ruling 2026-08-13: all-embroidery (keeps the side mark).
+  cap_print: ["embroidery_front_large", "front_dtf_hat"],
   mug: ["default"],
   sticker: ["default"],
 };
@@ -72,6 +75,8 @@ for (const p of seed.products) {
   }
   if (p.situ && !existsSync(join(ROOT, "public", p.situ.replace(/^\//, ""))))
     say("WARN", p.id, `situ image missing: ${p.situ}`);
+  if (p.pf?.sideLogo && !existsSync(join(ROOT, "public", p.pf.sideLogo.replace(/^\//, ""))))
+    say("FAIL", p.id, `sideLogo file missing: ${p.pf.sideLogo}`);
 }
 
 console.log(`\nverify-orders: ${fail} FAIL, ${warn} WARN across ${seed.products.length} products`);
