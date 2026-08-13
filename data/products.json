@@ -120,13 +120,12 @@
     {
       "id": "seal-cap", "section": "caps",
       "name": "T.O.G.G. Seal Cap",
-      "tagline": "the rainbow seal, embroidered • mark stitched on the side",
+      "tagline": "the rainbow seal, printed in full color on the front",
       "priceCents": 2799, "shipCents": 499, "garment": "mint", "sizes": ["One Size"],
       "situ": "/mockups/a2-situ-seal-cap.webp",
       "editions": { "standard": { "image": "/designs/a2-cap-seal.png" } },
       "unifiedEdition": true,
-      "pf": { "type": "cap_print", "color": "Pastel Mint", "placement": "embroidery_front_large", "sideLogo": "/designs/a2-cap-side-logo.png",
-        "threadColors": ["#000000", "#FFFFFF", "#A67843", "#CC3366", "#FFCC00", "#3399FF"] }
+      "pf": { "type": "cap_print", "color": "Pastel Mint", "placement": "front_dtf_hat" }
     },
     {
       "id": "maga-tears-mug", "section": "mugs",
