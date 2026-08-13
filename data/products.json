@@ -64,7 +64,7 @@
     },
     {
       "id": "seal-tee", "section": "tees",
-      "name": "T.O.G. Seal Tee",
+      "name": "T.O.G.G. Seal Tee",
       "tagline": "the rainbow seal, certified",
       "priceCents": 2999, "shipCents": 499, "garment": "black",
       "sizes": ["S", "M", "L", "XL", "2XL", "3XL"], "twoSided": true,
@@ -109,7 +109,7 @@
     {
       "id": "good-morning-cap", "section": "caps",
       "name": "Good Morning I'm Gay Cap",
-      "tagline": "printed front • embroidered T.O.G. mark on the side",
+      "tagline": "printed front • embroidered T.O.G.G. mark on the side",
       "priceCents": 2799, "shipCents": 499, "garment": "mint", "sizes": ["One Size"],
       "situ": "/mockups/a2-situ-good-morning-cap.webp",
       "editions": { "standard": { "image": "/designs/a2-cap-good-morning.png" } },
@@ -118,7 +118,7 @@
     },
     {
       "id": "seal-cap", "section": "caps",
-      "name": "T.O.G. Seal Cap",
+      "name": "T.O.G.G. Seal Cap",
       "tagline": "the rainbow seal, printed front • embroidered mark on the side",
       "priceCents": 2799, "shipCents": 499, "garment": "mint", "sizes": ["One Size"],
       "situ": "/mockups/a2-situ-seal-cap.webp",
@@ -177,7 +177,7 @@
     },
     {
       "id": "seal-sticker", "section": "stickers",
-      "name": "T.O.G. Seal Sticker",
+      "name": "T.O.G.G. Seal Sticker",
       "tagline": "THE logo, kiss-cut",
       "priceCents": 499, "shipCents": 429, "garment": "white", "sizes": ["3\" × 3\""],
       "situ": "/mockups/a2-situ-seal-sticker.webp",

@@ -17,7 +17,7 @@ export default async function Home() {
           <strong> Standard</strong> or <strong>Ethical ✦</strong> (labeled AI art from
           consenting sources only, lettering hand-set by actual fonts with actual
           licenses). And it all gives back: <strong>5% of all proceeds go to a gay
-          charity of TOG&rsquo;s choosing.</strong>
+          charity of TOGG&rsquo;s choosing.</strong>
         </p>
         <div className="badge-row">
           <span className="pill">PRINTED PER ORDER</span>

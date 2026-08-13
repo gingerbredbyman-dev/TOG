@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
       <body>
         <header className="site-header">
           <a href="/" className="brand">
-            <img src="/logo.png" alt="T.O.G. seal" className="brand-seal" />
+            <img src="/logo.png" alt="T.O.G.G. seal" className="brand-seal" />
             <span className="brand-words">
               <span className="brand-script">The Official</span>
               <span className="brand-chunk">GAY GUY SHOP</span>
@@ -39,7 +39,7 @@ export default function RootLayout({ children }) {
           <p className="foot-script">the official gay guy shop</p>
           <p className="foot-fine">
             Florida • a 50/50 partner project • every item printed per order — no
-            warehouses, no waste • 5% of all proceeds go to a gay charity of TOG&rsquo;s
+            warehouses, no waste • 5% of all proceeds go to a gay charity of TOGG&rsquo;s
             choosing • Ethical Edition art from consenting sources only • satire • for
             entertainment purposes only
           </p>
