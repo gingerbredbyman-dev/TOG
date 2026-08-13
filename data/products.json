@@ -109,22 +109,24 @@
     {
       "id": "good-morning-cap", "section": "caps",
       "name": "Good Morning I'm Gay Cap",
-      "tagline": "printed front • embroidered T.O.G.G. mark on the side",
+      "tagline": "embroidered front • T.O.G.G. mark stitched on the side",
       "priceCents": 2799, "shipCents": 499, "garment": "mint", "sizes": ["One Size"],
       "situ": "/mockups/a2-situ-good-morning-cap.webp",
       "editions": { "standard": { "image": "/designs/a2-cap-good-morning.png" } },
       "unifiedEdition": true,
-      "pf": { "type": "cap_print", "color": "Pastel Mint", "placement": "front_dtf_hat", "sideLogo": "/designs/a2-cap-side-logo.png" }
+      "pf": { "type": "cap_print", "color": "Pastel Mint", "placement": "embroidery_front_large", "sideLogo": "/designs/a2-cap-side-logo.png",
+        "threadColors": ["#333366", "#FFFFFF", "#3399FF", "#CC3366", "#FFCC00", "#000000"] }
     },
     {
       "id": "seal-cap", "section": "caps",
       "name": "T.O.G.G. Seal Cap",
-      "tagline": "the rainbow seal, printed front • embroidered mark on the side",
+      "tagline": "the rainbow seal, embroidered • mark stitched on the side",
       "priceCents": 2799, "shipCents": 499, "garment": "mint", "sizes": ["One Size"],
       "situ": "/mockups/a2-situ-seal-cap.webp",
       "editions": { "standard": { "image": "/designs/a2-cap-seal.png" } },
       "unifiedEdition": true,
-      "pf": { "type": "cap_print", "color": "Pastel Mint", "placement": "front_dtf_hat", "sideLogo": "/designs/a2-cap-side-logo.png" }
+      "pf": { "type": "cap_print", "color": "Pastel Mint", "placement": "embroidery_front_large", "sideLogo": "/designs/a2-cap-side-logo.png",
+        "threadColors": ["#000000", "#FFFFFF", "#A67843", "#CC3366", "#FFCC00", "#3399FF"] }
     },
     {
       "id": "maga-tears-mug", "section": "mugs",
@@ -141,6 +143,7 @@
       "name": "Filled With MAGA Tears — Deco Deluxe",
       "tagline": "full art-deco wrap: palms, suns, teardrops",
       "priceCents": 1799, "shipCents": 699, "garment": "white", "sizes": ["11 oz"],
+      "situ": "/mockups/a2-situ-maga-tears-fancy-mug.webp",
       "editions": { "standard": { "image": "/designs/a2-mug-maga-tears-fancy.png" } },
       "unifiedEdition": true,
       "pf": { "type": "mug", "color": "White", "placement": "default" }

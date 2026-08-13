@@ -184,17 +184,24 @@ for (const p of catalog.products) {
       // so the mark always ships as embroidery_left — on printed caps too.
       // Printful requires an explicit thread palette for side embroidery
       // (thread_colors_left); the mark is black-only.
-      if (p.pf.sideLogo && (p.pf.type === "cap" || p.pf.type === "cap_print"))
+      const isCap = p.pf.type === "cap" || p.pf.type === "cap_print";
+      if (p.pf.sideLogo && isCap)
         files.push({ type: "embroidery_left", url: `${ORIGIN}${p.pf.sideLogo}` });
+      // Printful embroidery rules (learned the hard way, all API-enforced):
+      // full_color exists only on FRONT placements; sides are standard-thread
+      // only; techniques must match across one cap. A side mark therefore
+      // forces flat-thread embroidery everywhere, with explicit variant-level
+      // palettes from Printful's fixed thread list per placement.
+      const capOptions = [];
+      if (isCap && primaryType === "embroidery_front_large")
+        capOptions.push({ id: "thread_colors_front_large", value: p.pf.threadColors || ["#000000", "#FFFFFF"] });
+      if (p.pf.sideLogo && isCap)
+        capOptions.push({ id: "thread_colors_left", value: ["#000000"] });
       sync_variants.push({
         retail_price: (p.priceCents / 100).toFixed(2),
         variant_id: v.id,
         files,
-        // Embroidery placements demand an explicit thread palette at the
-        // VARIANT level (thread_colors_left) — the side mark is black-only.
-        ...(p.pf.sideLogo && (p.pf.type === "cap" || p.pf.type === "cap_print")
-          ? { options: [{ id: "thread_colors_left", value: ["#000000"] }] }
-          : {}),
+        ...(capOptions.length ? { options: capOptions } : {}),
         _size: size,
       });
     }

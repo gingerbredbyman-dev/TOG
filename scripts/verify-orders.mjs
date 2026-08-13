@@ -15,7 +15,10 @@ const seed = JSON.parse(readFileSync(join(ROOT, "data", "products.json"), "utf8"
 const VALID_PLACEMENTS = {
   tshirt: ["front", "front+back"],
   cap: ["embroidery_front"],
-  cap_print: ["front_dtf_hat"], // PF 481 Beechfield B653: printed front is front_dtf_hat ("default" there = embroidery_front)
+  // PF 481 Beechfield B653. Techniques are exclusive per cap: DTF gives only
+  // front_dtf_hat (no sides); EMBROIDERY gives embroidery_front_large + sides.
+  // Line ruling 2026-08-13: all-embroidery (keeps the side mark).
+  cap_print: ["embroidery_front_large", "front_dtf_hat"],
   mug: ["default"],
   sticker: ["default"],
 };
