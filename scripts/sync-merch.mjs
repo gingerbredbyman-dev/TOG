@@ -46,22 +46,30 @@ function sizeMatches(wanted, candidate) {
 }
 
 async function pf(path, opts = {}) {
-  const res = await fetch(API + path, {
-    ...opts,
-    headers: {
-      Authorization: `Bearer ${KEY}`,
-      "X-PF-Store-ID": STORE,
-      "Content-Type": "application/json",
-      ...(opts.headers || {}),
-    },
-  });
-  const json = await res.json().catch(() => ({}));
-  if (!res.ok) {
-    const e = new Error(`${path} -> ${res.status}: ${JSON.stringify(json).slice(0, 300)}`);
-    e.status = res.status;
-    throw e;
+  for (let attempt = 1; ; attempt++) {
+    const res = await fetch(API + path, {
+      ...opts,
+      headers: {
+        Authorization: `Bearer ${KEY}`,
+        "X-PF-Store-ID": STORE,
+        "Content-Type": "application/json",
+        ...(opts.headers || {}),
+      },
+    });
+    const json = await res.json().catch(() => ({}));
+    if (res.status === 429 && attempt <= 6) {
+      const wait = (Number(res.headers.get("retry-after")) || 15) + 2;
+      console.log(`  ~ rate limited, waiting ${wait}s (attempt ${attempt}/6)`);
+      await new Promise((r) => setTimeout(r, wait * 1000));
+      continue;
+    }
+    if (!res.ok) {
+      const e = new Error(`${path} -> ${res.status}: ${JSON.stringify(json).slice(0, 300)}`);
+      e.status = res.status;
+      throw e;
+    }
+    return json.result;
   }
-  return json.result;
 }
 
 const localFile = (publicPath) => join(ROOT, "public", publicPath.replace(/^\//, ""));
@@ -174,12 +182,19 @@ for (const p of catalog.products) {
       // Small brand mark on the cap's left side. Sides are embroidery-only
       // across Printful's entire cap catalog (no printed-side product exists),
       // so the mark always ships as embroidery_left — on printed caps too.
+      // Printful requires an explicit thread palette for side embroidery
+      // (thread_colors_left); the mark is black-only.
       if (p.pf.sideLogo && (p.pf.type === "cap" || p.pf.type === "cap_print"))
         files.push({ type: "embroidery_left", url: `${ORIGIN}${p.pf.sideLogo}` });
       sync_variants.push({
         retail_price: (p.priceCents / 100).toFixed(2),
         variant_id: v.id,
         files,
+        // Embroidery placements demand an explicit thread palette at the
+        // VARIANT level (thread_colors_left) — the side mark is black-only.
+        ...(p.pf.sideLogo && (p.pf.type === "cap" || p.pf.type === "cap_print")
+          ? { options: [{ id: "thread_colors_left", value: ["#000000"] }] }
+          : {}),
         _size: size,
       });
     }
@@ -194,29 +209,37 @@ for (const p of catalog.products) {
       sync_variants: sync_variants.map(({ _size, ...v }) => v),
     };
 
-    let productId;
-    if (existing[externalId]) {
-      const updated = await pf(`/store/products/${existing[externalId]}`, {
-        method: "PUT",
-        body: JSON.stringify(payload),
-      });
-      productId = updated.id;
-      console.log(`updated ${name} (${sync_variants.length} variants)`);
-    } else {
-      const created = await pf(`/store/products`, {
-        method: "POST",
-        body: JSON.stringify(payload),
-      });
-      productId = created.id;
-      console.log(`created ${name} (${sync_variants.length} variants)`);
-    }
+    // One product's API rejection must not abort the whole catalog sync —
+    // log it, count it, keep going (exit code stays non-zero via hardErrors).
+    try {
+      let productId;
+      if (existing[externalId]) {
+        const updated = await pf(`/store/products/${existing[externalId]}`, {
+          method: "PUT",
+          body: JSON.stringify(payload),
+        });
+        productId = updated.id;
+        console.log(`updated ${name} (${sync_variants.length} variants)`);
+      } else {
+        const created = await pf(`/store/products`, {
+          method: "POST",
+          body: JSON.stringify(payload),
+        });
+        productId = created.id;
+        console.log(`created ${name} (${sync_variants.length} variants)`);
+      }
 
-    // Map sizes -> sync variant ids by catalog variant_id (NOT array order —
-    // Printful reorders sync_variants in its responses).
-    const detail = await pf(`/store/products/${productId}`);
-    for (const sv of detail.sync_variants) {
-      const match = sync_variants.find((s) => s.variant_id === sv.variant_id);
-      if (match) map[`${p.id}:${ed}:${match._size}`] = sv.id;
+      // Map sizes -> sync variant ids by catalog variant_id (NOT array order —
+      // Printful reorders sync_variants in its responses).
+      const detail = await pf(`/store/products/${productId}`);
+      for (const sv of detail.sync_variants) {
+        const match = sync_variants.find((s) => s.variant_id === sv.variant_id);
+        if (match) map[`${p.id}:${ed}:${match._size}`] = sv.id;
+      }
+    } catch (err) {
+      console.error(`  !! SYNC FAILED for ${p.id} [${ed}]: ${err.message}`);
+      hardErrors++;
+      continue;
     }
   }
 }
