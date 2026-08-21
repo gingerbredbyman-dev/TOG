@@ -1,8 +1,11 @@
+import ClearCart from "../../components/ClearCart";
+
 export default async function Success({ searchParams }) {
   const params = await searchParams;
   const demo = params?.demo === "1";
   return (
     <main className="success-wrap">
+      <ClearCart />
       <h1>{demo ? "Demo checkout ✦ complete" : "Officially yours!"}</h1>
       {demo ? (
         <p>

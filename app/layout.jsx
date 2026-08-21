@@ -1,4 +1,5 @@
 import "./globals.css";
+import CartWidget from "../components/CartWidget";
 
 export const metadata = {
   title: "The Official Gay Guy Shop",
@@ -33,6 +34,7 @@ export default function RootLayout({ children }) {
             <a href="/#mugs">Mug</a>
             <a href="/#stickers">Stickers</a>
           </nav>
+          <CartWidget />
         </header>
         {children}
         <footer className="site-footer">

@@ -79,18 +79,49 @@ export async function POST(req) {
     return NextResponse.json({ received: true, skipped: "unpaid" });
   }
 
-  const { productId, edition, size } = full.metadata || {};
-  // Raw lookup: a product hidden AFTER purchase must still fulfill.
-  const product = (await allProductsRaw()).find((p) => p.id === productId) || null;
-  if (!productId || !product) {
-    await alert(`paid session ${full.id} has no/unknown product metadata (${productId})`);
+  // Fulfillment lines come from session metadata: cart JSON sharded across
+  // cart0..cartN keys (Stripe caps each value at 500 chars). Legacy single-item
+  // sessions carried productId/edition/size instead.
+  const md = full.metadata || {};
+  let cartLines = null;
+  if (md.cartv === "1") {
+    let joined = "";
+    for (let i = 0; md[`cart${i}`] !== undefined; i++) joined += md[`cart${i}`];
+    try {
+      const parsed = JSON.parse(joined);
+      if (Array.isArray(parsed) && parsed.length) cartLines = parsed;
+    } catch {
+      /* unreadable — handled by the alert below */
+    }
+  } else if (md.productId) {
+    cartLines = [
+      {
+        i: md.productId,
+        e: md.edition || "standard",
+        s: md.size || "",
+        q: full.line_items?.data?.[0]?.quantity || 1,
+      },
+    ];
+  }
+  if (!cartLines) {
+    await alert(`paid session ${full.id} has no/unreadable cart metadata`);
     return NextResponse.json({ received: true, fulfillment: "no-metadata" });
   }
 
-  const qty = full.line_items?.data?.[0]?.quantity || 1;
+  // Raw lookup: a product hidden AFTER purchase must still fulfill.
+  const all = await allProductsRaw();
+  const unknown = cartLines.filter((l) => !all.some((p) => p.id === l.i));
+  if (unknown.length) {
+    await alert(
+      `paid session ${full.id} references unknown product(s): ${unknown
+        .map((l) => l.i)
+        .join(", ")}`
+    );
+    return NextResponse.json({ received: true, fulfillment: "no-metadata" });
+  }
   const ship = full.collected_information?.shipping_details || full.shipping_details;
   if (!ship?.address) {
-    await alert(`paid session ${full.id} (${productId}) has no shipping address`);
+    await alert(`paid session ${full.id} (${cartLines.map((l) => l.i).join(", ")}) has no shipping address`);
     return NextResponse.json({ received: true, fulfillment: "no-address" });
   }
 
@@ -100,7 +131,9 @@ export async function POST(req) {
     !process.env.PRINTFUL_STORE_ID
   ) {
     console.log(
-      `[dry-run fulfillment] ${productId}:${edition}:${size} x${qty} for session ${full.id}`
+      `[dry-run fulfillment] ${cartLines
+        .map((l) => `${l.i}:${l.e}:${l.s} x${l.q}`)
+        .join(" + ")} for session ${full.id}`
     );
     return NextResponse.json({ received: true, fulfillment: "dry-run" });
   }
@@ -110,10 +143,19 @@ export async function POST(req) {
     return NextResponse.json({ received: true, fulfillment: "unmapped" });
   }
 
-  const key = `${productId}:${edition || "standard"}:${size || "default"}`;
-  const syncVariantId = map[key];
-  if (!syncVariantId) {
-    await alert(`paid but UNMAPPED variant ${key} (session ${full.id}) — manual order needed`);
+  const orderItems = [];
+  const unmapped = [];
+  for (const l of cartLines) {
+    const key = `${l.i}:${l.e || "standard"}:${l.s || "default"}`;
+    const quantity = Math.min(10, Math.max(1, Math.floor(Number(l.q)) || 1));
+    if (!map[key]) unmapped.push(key);
+    else orderItems.push({ sync_variant_id: map[key], quantity });
+  }
+  if (unmapped.length) {
+    // Never partially fulfill a paid order — all lines or none, humans decide.
+    await alert(
+      `paid but UNMAPPED variant(s) ${unmapped.join(", ")} (session ${full.id}) — manual order needed`
+    );
     return NextResponse.json({ received: true, fulfillment: "unmapped" });
   }
 
@@ -149,7 +191,7 @@ export async function POST(req) {
           country_code: ship.address.country,
           zip: ship.address.postal_code,
         },
-        items: [{ sync_variant_id: syncVariantId, quantity: qty }],
+        items: orderItems,
       }),
     });
     pfJson = await pfRes.json().catch(() => ({}));
@@ -166,7 +208,7 @@ export async function POST(req) {
       return NextResponse.json({ error: "retry" }, { status: 500 });
     }
     await alert(
-      `Printful REJECTED order for ${key} (session ${full.id}): ${JSON.stringify(pfJson).slice(0, 200)}`
+      `Printful REJECTED order for ${cartLines.map((l) => l.i).join(", ")} (session ${full.id}): ${JSON.stringify(pfJson).slice(0, 200)}`
     );
     return NextResponse.json({ received: true, fulfillment: "rejected" });
   }

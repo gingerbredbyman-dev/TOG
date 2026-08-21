@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { formatPrice, webPath } from "../../../lib/format";
+import { addToCart, openCart } from "../../../lib/cart";
 
 export default function ProductView({ product }) {
   const editions = Object.keys(product.editions);
@@ -18,14 +19,19 @@ export default function ProductView({ product }) {
         ? webPath(ed.back)
         : webPath(ed.image);
 
-  async function buy() {
+  function add() {
+    addToCart({ id: product.id, edition, size, qty: 1 });
+    openCart();
+  }
+
+  async function buyNow() {
     setBusy(true);
     setErr("");
     try {
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ productId: product.id, edition, size }),
+        body: JSON.stringify({ items: [{ id: product.id, edition, size, qty: 1 }] }),
       });
       const data = await res.json();
       if (data.url) window.location.href = data.url;
@@ -91,12 +97,16 @@ export default function ProductView({ product }) {
           </>
         )}
 
-        <button className="buy-btn" onClick={buy} disabled={busy}>
-          {busy ? "Summoning checkout…" : "Buy it — printed just for you"}
+        <button className="buy-btn" onClick={add} disabled={busy}>
+          Add to cart
+        </button>
+        <button className="buy-btn ghost" onClick={buyNow} disabled={busy}>
+          {busy ? "Summoning checkout…" : "Buy it now — just this one"}
         </button>
         {err && <p className="buy-note">⚠ {err}</p>}
         <p className="buy-note">
-          Printed &amp; shipped per order via Printful. Quantity adjustable at checkout.
+          Printed &amp; shipped per order via Printful. Mix items in the cart — one
+          order, one shipping charge.
         </p>
       </div>
     </main>
