@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { createHash } from "crypto";
 import { allProductsRaw } from "../../../lib/catalog";
 import map from "../../../data/printful-map.json";
 
@@ -159,9 +160,13 @@ export async function POST(req) {
     return NextResponse.json({ received: true, fulfillment: "unmapped" });
   }
 
+  // Printful caps external_id at 32 chars; Stripe session ids are ~66. A stable
+  // hash keeps idempotency: same session always derives the same external_id.
+  const extId = createHash("sha256").update(full.id).digest("hex").slice(0, 32);
+
   // Idempotency: Stripe delivers at-least-once. Has this session already been ordered?
   try {
-    const dup = await fetch(`${PF}/orders/@${full.id}`, { headers: pfHeaders() });
+    const dup = await fetch(`${PF}/orders/@${extId}`, { headers: pfHeaders() });
     if (dup.ok) {
       console.log("duplicate webhook delivery — order already exists for", full.id);
       return NextResponse.json({ received: true, fulfillment: "duplicate" });
@@ -181,7 +186,7 @@ export async function POST(req) {
       method: "POST",
       headers: pfHeaders(),
       body: JSON.stringify({
-        external_id: full.id,
+        external_id: extId,
         recipient: {
           name: ship.name,
           address1: ship.address.line1,
@@ -214,5 +219,19 @@ export async function POST(req) {
   }
 
   console.log("Printful order created:", pfJson?.result?.id, "for", full.id);
+  // Good-news ping (never blocks the response; no customer address in the message).
+  if (process.env.ALERT_NTFY_URL) {
+    try {
+      await fetch(process.env.ALERT_NTFY_URL, {
+        method: "POST",
+        body: `SALE printed: $${(full.amount_total / 100).toFixed(2)} — ${cartLines
+          .map((l) => `${l.i} x${l.q}`)
+          .join(", ")} (PF #${pfJson?.result?.id})`,
+        headers: { Title: "TOGG sale", Priority: "default", Tags: "tada" },
+      });
+    } catch {
+      /* never fail the webhook over a ping */
+    }
+  }
   return NextResponse.json({ received: true, fulfillment: "created" });
 }
