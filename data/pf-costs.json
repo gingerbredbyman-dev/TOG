@@ -1,0 +1,222 @@
+{
+  "allegedly-tee": {
+    "type": "tshirt",
+    "retailCents": 2999,
+    "itemCents": 1787,
+    "shipUSFirstCents": 495,
+    "shipUSAddlCents": 220,
+    "taxUSCents": 160,
+    "shipCAFirstCents": 859,
+    "taxCACents": 0
+  },
+  "fan-tee": {
+    "type": "tshirt",
+    "retailCents": 2999,
+    "itemCents": 1787,
+    "shipUSFirstCents": 495,
+    "shipUSAddlCents": 220,
+    "taxUSCents": 160,
+    "shipCAFirstCents": 859,
+    "taxCACents": 342
+  },
+  "fan-fancy-tee": {
+    "type": "tshirt",
+    "retailCents": 2999,
+    "itemCents": 1787,
+    "shipUSFirstCents": 495,
+    "shipUSAddlCents": 220,
+    "taxUSCents": 160,
+    "shipCAFirstCents": 859,
+    "taxCACents": 342
+  },
+  "good-morning-tee": {
+    "type": "tshirt",
+    "retailCents": 2999,
+    "itemCents": 1787,
+    "shipUSFirstCents": 495,
+    "shipUSAddlCents": 220,
+    "taxUSCents": 160,
+    "shipCAFirstCents": 859,
+    "taxCACents": 342
+  },
+  "logo-tee": {
+    "type": "tshirt",
+    "retailCents": 2999,
+    "itemCents": 1787,
+    "shipUSFirstCents": 495,
+    "shipUSAddlCents": 220,
+    "taxUSCents": 160,
+    "shipCAFirstCents": 859,
+    "taxCACents": 0
+  },
+  "seal-tee": {
+    "type": "tshirt",
+    "retailCents": 2999,
+    "itemCents": 1787,
+    "shipUSFirstCents": 495,
+    "shipUSAddlCents": 220,
+    "taxUSCents": 160,
+    "shipCAFirstCents": 859,
+    "taxCACents": 342
+  },
+  "mutetv-tee": {
+    "type": "tshirt",
+    "retailCents": 2999,
+    "itemCents": 1787,
+    "shipUSFirstCents": 495,
+    "shipUSAddlCents": 220,
+    "taxUSCents": 160,
+    "shipCAFirstCents": 859,
+    "taxCACents": 0
+  },
+  "space-rock-tee": {
+    "type": "tshirt",
+    "retailCents": 2999,
+    "itemCents": 1787,
+    "shipUSFirstCents": 495,
+    "shipUSAddlCents": 220,
+    "taxUSCents": 160,
+    "shipCAFirstCents": 859,
+    "taxCACents": 342
+  },
+  "togayto-tee": {
+    "type": "tshirt",
+    "retailCents": 2999,
+    "itemCents": 1787,
+    "shipUSFirstCents": 495,
+    "shipUSAddlCents": 220,
+    "taxUSCents": 160,
+    "shipCAFirstCents": 859,
+    "taxCACents": 342
+  },
+  "good-morning-cap": {
+    "type": "cap_print",
+    "retailCents": 2799,
+    "itemCents": 2126,
+    "shipUSFirstCents": 469,
+    "shipUSAddlCents": 200,
+    "taxUSCents": 249,
+    "shipCAFirstCents": 789,
+    "taxCACents": 0
+  },
+  "seal-cap": {
+    "type": "cap_print",
+    "retailCents": 2799,
+    "itemCents": 1729,
+    "shipUSFirstCents": 469,
+    "shipUSAddlCents": 200,
+    "taxUSCents": 154,
+    "shipCAFirstCents": 789,
+    "taxCACents": 0
+  },
+  "maga-tears-mug": {
+    "type": "mug",
+    "retailCents": 1799,
+    "itemCents": 607,
+    "shipUSFirstCents": 669,
+    "shipUSAddlCents": 350,
+    "taxUSCents": 89,
+    "shipCAFirstCents": 809,
+    "taxCACents": 195
+  },
+  "maga-tears-fancy-mug": {
+    "type": "mug",
+    "retailCents": 1799,
+    "itemCents": 607,
+    "shipUSFirstCents": 669,
+    "shipUSAddlCents": 350,
+    "taxUSCents": 89,
+    "shipCAFirstCents": 809,
+    "taxCACents": 195
+  },
+  "togayto-mug": {
+    "type": "mug",
+    "retailCents": 1799,
+    "itemCents": 607,
+    "shipUSFirstCents": 669,
+    "shipUSAddlCents": 350,
+    "taxUSCents": 89,
+    "shipCAFirstCents": 809,
+    "taxCACents": 195
+  },
+  "allegedly-sticker": {
+    "type": "sticker",
+    "retailCents": 499,
+    "itemCents": 234,
+    "shipUSFirstCents": 449,
+    "shipUSAddlCents": 5,
+    "taxUSCents": 47,
+    "shipCAFirstCents": 519,
+    "taxCACents": 96
+  },
+  "fan-sticker": {
+    "type": "sticker",
+    "retailCents": 499,
+    "itemCents": 234,
+    "shipUSFirstCents": 449,
+    "shipUSAddlCents": 5,
+    "taxUSCents": 47,
+    "shipCAFirstCents": 519,
+    "taxCACents": 96
+  },
+  "seal-sticker": {
+    "type": "sticker",
+    "retailCents": 499,
+    "itemCents": 234,
+    "shipUSFirstCents": 449,
+    "shipUSAddlCents": 5,
+    "taxUSCents": 47,
+    "shipCAFirstCents": 519,
+    "taxCACents": 96
+  },
+  "mutetv-sticker": {
+    "type": "sticker",
+    "retailCents": 499,
+    "itemCents": 234,
+    "shipUSFirstCents": 449,
+    "shipUSAddlCents": 5,
+    "taxUSCents": 47,
+    "shipCAFirstCents": 519,
+    "taxCACents": 96
+  },
+  "mutetv-boc-sticker": {
+    "type": "sticker",
+    "retailCents": 499,
+    "itemCents": 234,
+    "shipUSFirstCents": 449,
+    "shipUSAddlCents": 5,
+    "taxUSCents": 47,
+    "shipCAFirstCents": 519,
+    "taxCACents": 96
+  },
+  "space-rock-comet-sticker": {
+    "type": "sticker",
+    "retailCents": 499,
+    "itemCents": 234,
+    "shipUSFirstCents": 449,
+    "shipUSAddlCents": 5,
+    "taxUSCents": 47,
+    "shipCAFirstCents": 519,
+    "taxCACents": 96
+  },
+  "space-rock-sticker": {
+    "type": "sticker",
+    "retailCents": 499,
+    "itemCents": 234,
+    "shipUSFirstCents": 449,
+    "shipUSAddlCents": 5,
+    "taxUSCents": 47,
+    "shipCAFirstCents": 519,
+    "taxCACents": 96
+  },
+  "togayto-sticker": {
+    "type": "sticker",
+    "retailCents": 499,
+    "itemCents": 234,
+    "shipUSFirstCents": 449,
+    "shipUSAddlCents": 5,
+    "taxUSCents": 47,
+    "shipCAFirstCents": 519,
+    "taxCACents": 96
+  }
+}

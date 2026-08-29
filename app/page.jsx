@@ -13,13 +13,14 @@ export default async function Home() {
         </h1>
         <p>
           Tees, caps, mugs and stickers from The Official Gay Guy — printed one at a
-          time, only when you order. And it all gives back: <strong>5% of all
-          proceeds go to a gay charity of TOGG&rsquo;s choosing.</strong>
+          time, only when you order. And it all gives back: <strong>5% of every
+          sale goes to SAGE</strong>, fighting homelessness among LGBTQ+ elders with
+          affordable, discrimination-free housing.
         </p>
         <div className="badge-row">
           <span className="pill">PRINTED PER ORDER</span>
           <span className="pill alt">CERTIFIED ✦ AUTHENTIC</span>
-          <span className="pill charity">5% TO A GAY CHARITY</span>
+          <span className="pill charity">5% TO SAGE</span>
         </div>
       </section>
 

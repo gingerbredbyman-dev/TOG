@@ -12,7 +12,7 @@ export async function POST(req) {
     return NextResponse.json({ error: "Bad request" }, { status: 400 });
   }
 
-  const cart = await resolveCart(body?.items);
+  const cart = await resolveCart(body?.items, body?.country || "US");
   if (cart.error) return NextResponse.json({ error: cart.error }, { status: 400 });
 
   return NextResponse.json({
@@ -27,8 +27,10 @@ export async function POST(req) {
       image: webPath(l.product.editions[l.edition].image),
       soldOut: false,
     })),
+    country: cart.country,
     subtotalCents: cart.subtotalCents,
     shippingCents: cart.shippingCents,
+    sageCents: cart.sageCents,
     totalCents: cart.totalCents,
   });
 }

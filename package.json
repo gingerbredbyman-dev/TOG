@@ -9,7 +9,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "sync": "node --env-file-if-exists=.env.local scripts/sync-merch.mjs"
+    "sync": "node --env-file-if-exists=.env.local scripts/sync-merch.mjs",
+    "audit": "node scripts/price-audit.mjs",
+    "sage": "node --env-file-if-exists=.env.local scripts/sage-report.mjs",
+    "reconcile": "node --env-file-if-exists=.env.local scripts/reconcile-orders.mjs"
   },
   "dependencies": {
     "next": "^15.4.0",

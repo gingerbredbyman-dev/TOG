@@ -4,7 +4,7 @@ import CartWidget from "../components/CartWidget";
 export const metadata = {
   title: "The Official Gay Guy Shop",
   description:
-    "The Official Gay Guy Shop — officially certified tees, caps, mugs and stickers, printed per order in the USA. Florida born. 5% of all proceeds go to a gay charity of TOGG's choosing.",
+    "The Official Gay Guy Shop — officially certified tees, caps, mugs and stickers, printed per order in the USA. Florida born. 5% of every sale goes to SAGE, fighting LGBTQ+ elder homelessness.",
 };
 
 export default function RootLayout({ children }) {
@@ -41,8 +41,8 @@ export default function RootLayout({ children }) {
           <p className="foot-script">the official gay guy shop</p>
           <p className="foot-fine">
             Florida • a 50/50 partner project • every item printed per order — no
-            warehouses, no waste • 5% of all proceeds go to a gay charity of TOGG&rsquo;s
-            choosing • satire • for entertainment purposes only
+            warehouses, no waste • 5% of every sale goes to SAGE to fight LGBTQ+
+            elder homelessness • satire • for entertainment purposes only
           </p>
         </footer>
       </body>

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createHash } from "crypto";
 import { allProductsRaw } from "../../../lib/catalog";
+import { sageCents as sagePct, orderProfitCents, stripeFeeCents } from "../../../lib/pricing";
 import map from "../../../data/printful-map.json";
 
 const STRIPE_API_VERSION = "2025-02-24.acacia";
@@ -10,6 +11,11 @@ const PF = "https://api.printful.com";
 // Safety properties:
 //  - idempotent: checks Printful for an existing order with this session id first
 //  - only fulfills sessions whose payment_status is "paid"
+//  - PROFIT BACKSTOP: the Printful order is created as a DRAFT, its real costs
+//    are compared against what the buyer paid (minus tax collected, Stripe's
+//    fee, and the 5% SAGE earmark), and it is confirmed for production ONLY if
+//    profit clears FULFILL_MIN_PROFIT_CENTS (default 0). Underwater orders stay
+//    drafts + fire a critical alert — no order can auto-print at a loss.
 //  - guarded awaits: transient errors -> 500 (Stripe retries, dedupe absorbs them);
 //    permanent errors -> 200 + alert (no retry storm, humans notified)
 
@@ -21,20 +27,22 @@ function pfHeaders() {
   };
 }
 
-async function alert(msg) {
-  console.error("[FULFILLMENT ALERT]", msg);
+async function notify(msg, { title = "TOGG fulfillment", priority = "high", tags = "warning" } = {}) {
+  if (priority === "high") console.error("[FULFILLMENT ALERT]", msg);
+  else console.log("[FULFILLMENT]", msg);
   if (process.env.ALERT_NTFY_URL) {
     try {
       await fetch(process.env.ALERT_NTFY_URL, {
         method: "POST",
         body: `TOGG store: ${msg}`,
-        headers: { Title: "TOGG fulfillment", Priority: "high", Tags: "warning" },
+        headers: { Title: title, Priority: priority, Tags: tags },
       });
     } catch {
       /* alerting must never take the webhook down */
     }
   }
 }
+const alert = (msg) => notify(msg);
 
 export async function POST(req) {
   const payload = await req.text();
@@ -72,6 +80,15 @@ export async function POST(req) {
       expand: ["line_items"],
     });
   } catch (err) {
+    // A permanent 4xx (bad/rotated key, revoked permission) would loop as 500
+    // until Stripe drops the event in ~3 days — with nobody told. Alert instead.
+    const sc = err?.statusCode;
+    if (sc && sc !== 429 && sc < 500) {
+      await alert(
+        `session retrieve PERMANENTLY failing (${sc}) for ${event.data.object.id} — check the Stripe key. Manual fulfillment needed.`
+      );
+      return NextResponse.json({ received: true, fulfillment: "retrieve-failed" });
+    }
     console.error("session retrieve failed (transient):", err.message);
     return NextResponse.json({ error: "retry" }, { status: 500 });
   }
@@ -120,6 +137,7 @@ export async function POST(req) {
     );
     return NextResponse.json({ received: true, fulfillment: "no-metadata" });
   }
+
   const ship = full.collected_information?.shipping_details || full.shipping_details;
   if (!ship?.address) {
     await alert(`paid session ${full.id} (${cartLines.map((l) => l.i).join(", ")}) has no shipping address`);
@@ -131,11 +149,16 @@ export async function POST(req) {
     !process.env.PRINTFUL_API_KEY ||
     !process.env.PRINTFUL_STORE_ID
   ) {
-    console.log(
-      `[dry-run fulfillment] ${cartLines
-        .map((l) => `${l.i}:${l.e}:${l.s} x${l.q}`)
-        .join(" + ")} for session ${full.id}`
-    );
+    const summary = cartLines.map((l) => `${l.i}:${l.e}:${l.s} x${l.q}`).join(" + ");
+    console.log(`[dry-run fulfillment] ${summary} for session ${full.id}`);
+    // Dry-run in PRODUCTION means money was collected and nothing will print —
+    // exactly the silent failure that ate the first real order. Scream.
+    if (process.env.NODE_ENV === "production") {
+      await notify(
+        `PAID ORDER NOT FULFILLED (fulfillment switched off): ${summary}, session ${full.id}. Fix the FULFILL env or place it by hand.`,
+        { priority: "urgent", tags: "rotating_light" }
+      );
+    }
     return NextResponse.json({ received: true, fulfillment: "dry-run" });
   }
 
@@ -164,74 +187,174 @@ export async function POST(req) {
   // hash keeps idempotency: same session always derives the same external_id.
   const extId = createHash("sha256").update(full.id).digest("hex").slice(0, 32);
 
-  // Idempotency: Stripe delivers at-least-once. Has this session already been ordered?
+  // Idempotency: Stripe delivers at-least-once. If an order already exists and
+  // is past draft, we're done. A leftover DRAFT (an earlier run died before the
+  // profit gate, or a human hasn't released a held order) re-enters the gate.
+  let pfOrder = null;
+  let resuming = false;
   try {
     const dup = await fetch(`${PF}/orders/@${extId}`, { headers: pfHeaders() });
     if (dup.ok) {
-      console.log("duplicate webhook delivery — order already exists for", full.id);
-      return NextResponse.json({ received: true, fulfillment: "duplicate" });
-    }
-    if (dup.status !== 404) {
+      const dj = await dup.json();
+      if (dj.result?.status === "draft") {
+        pfOrder = dj.result;
+        resuming = true;
+        console.log("resuming existing draft", pfOrder.id, "for", full.id);
+      } else {
+        console.log("duplicate webhook delivery — order already exists for", full.id);
+        return NextResponse.json({ received: true, fulfillment: "duplicate" });
+      }
+    } else if (dup.status === 429 || dup.status >= 500) {
       console.error("dedupe check failed (transient):", dup.status);
       return NextResponse.json({ error: "retry" }, { status: 500 });
+    } else if (dup.status !== 404) {
+      // Permanent 4xx (bad/rotated PF key): retrying can't heal it — alert.
+      await alert(
+        `Printful dedupe check PERMANENTLY failing (${dup.status}) for session ${full.id} — check the Printful key. Manual fulfillment needed.`
+      );
+      return NextResponse.json({ received: true, fulfillment: "pf-auth-failed" });
     }
   } catch (err) {
     console.error("dedupe check failed (transient):", err.message);
     return NextResponse.json({ error: "retry" }, { status: 500 });
   }
 
-  let pfRes, pfJson;
+  // A resumed draft may exist because a HUMAN held it (profit floor) and then
+  // refunded the buyer. Never auto-confirm over a refund; if the refund state
+  // can't be read (restricted key), leave it for a human rather than guess.
+  if (resuming) {
+    try {
+      const pi = await stripe.paymentIntents.retrieve(full.payment_intent, {
+        expand: ["latest_charge"],
+      });
+      const ch = pi.latest_charge;
+      if (ch?.refunded || (ch?.amount_refunded ?? 0) > 0) {
+        await alert(
+          `draft PF #${pfOrder.id} left UNCONFIRMED: payment for session ${full.id} was refunded. Cancel the draft in Printful if it should not ship.`
+        );
+        return NextResponse.json({ received: true, fulfillment: "refunded-skip" });
+      }
+    } catch {
+      await alert(
+        `draft PF #${pfOrder.id} needs MANUAL review: cannot verify refund state for session ${full.id}. Confirm or cancel it in Printful yourself.`
+      );
+      return NextResponse.json({ received: true, fulfillment: "resume-unverified" });
+    }
+  }
+
+  // Step 1: create as DRAFT — nothing is billed or printed yet.
+  if (!pfOrder) {
+    let pfRes, pfJson;
+    try {
+      pfRes = await fetch(`${PF}/orders`, {
+        method: "POST",
+        headers: pfHeaders(),
+        body: JSON.stringify({
+          external_id: extId,
+          recipient: {
+            name: ship.name,
+            address1: ship.address.line1,
+            address2: ship.address.line2 || undefined,
+            city: ship.address.city,
+            state_code: ship.address.state,
+            country_code: ship.address.country,
+            zip: ship.address.postal_code,
+          },
+          items: orderItems,
+        }),
+      });
+      pfJson = await pfRes.json().catch(() => ({}));
+    } catch (err) {
+      console.error("Printful draft create failed (transient):", err.message);
+      return NextResponse.json({ error: "retry" }, { status: 500 });
+    }
+    if (!pfRes.ok) {
+      // 4xx = permanent (bad address, discontinued variant): alert, no retry storm.
+      // 5xx = transient: let Stripe retry; dedupe check absorbs double-sends.
+      if (pfRes.status >= 500) {
+        console.error("Printful 5xx (transient):", JSON.stringify(pfJson).slice(0, 300));
+        return NextResponse.json({ error: "retry" }, { status: 500 });
+      }
+      await alert(
+        `Printful REJECTED order for ${cartLines.map((l) => l.i).join(", ")} (session ${full.id}): ${JSON.stringify(pfJson).slice(0, 200)}`
+      );
+      return NextResponse.json({ received: true, fulfillment: "rejected" });
+    }
+    pfOrder = pfJson.result;
+  }
+
+  // Step 2: the profit gate, on REAL numbers.
+  const pfTotalCents = Math.round(parseFloat(pfOrder.costs?.total || "0") * 100);
+  const taxCollectedCents = full.total_details?.amount_tax || 0;
+  const sageEarmarkCents = Number.isFinite(parseInt(md.sage_cents, 10))
+    ? parseInt(md.sage_cents, 10)
+    : sagePct(full.amount_subtotal || 0);
+  // Exact Stripe fee when the key can read it; conservative estimate otherwise.
+  // Fallback fee estimate must not be optimistic: non-US shipping means a
+  // non-US-issued card is likely, and those carry Stripe's +1.5% surcharge.
+  const intlCard = (md.ship_country || ship.address.country || "US") !== "US";
+  let feeCents;
   try {
-    pfRes = await fetch(`${PF}/orders?confirm=true`, {
+    const pi = await stripe.paymentIntents.retrieve(full.payment_intent, {
+      expand: ["latest_charge.balance_transaction"],
+    });
+    feeCents =
+      pi.latest_charge?.balance_transaction?.fee ??
+      stripeFeeCents(full.amount_total, { intlCard });
+  } catch {
+    feeCents = stripeFeeCents(full.amount_total, { intlCard });
+  }
+  const profitCents = orderProfitCents({
+    amountTotalCents: full.amount_total,
+    taxCollectedCents,
+    stripeFeeCents: feeCents,
+    pfTotalCents,
+    sageCents: sageEarmarkCents,
+  });
+  // A malformed env value ("$1.00") must fail SAFE to a 0 floor, not to NaN —
+  // `profit < NaN` is always false, which would silently disable the gate.
+  const minRaw = parseInt(process.env.FULFILL_MIN_PROFIT_CENTS || "0", 10);
+  const minProfit = Number.isFinite(minRaw) ? minRaw : 0;
+  const money = (c) => `$${(c / 100).toFixed(2)}`;
+
+  if (profitCents < minProfit) {
+    await notify(
+      `ORDER HELD (draft PF #${pfOrder.id}): profit ${money(profitCents)} below floor ${money(minProfit)}. ` +
+        `Paid ${money(full.amount_total)}, PF ${money(pfTotalCents)}, fee ${money(feeCents)}, ` +
+        `tax ${money(taxCollectedCents)}, SAGE ${money(sageEarmarkCents)}. Session ${full.id}. ` +
+        `Review in Printful and confirm or refund by hand.`,
+      { priority: "urgent", tags: "rotating_light" }
+    );
+    return NextResponse.json({ received: true, fulfillment: "held-draft" });
+  }
+
+  // Step 3: profitable — confirm for production.
+  try {
+    const conf = await fetch(`${PF}/orders/${pfOrder.id}/confirm`, {
       method: "POST",
       headers: pfHeaders(),
-      body: JSON.stringify({
-        external_id: extId,
-        recipient: {
-          name: ship.name,
-          address1: ship.address.line1,
-          address2: ship.address.line2 || undefined,
-          city: ship.address.city,
-          state_code: ship.address.state,
-          country_code: ship.address.country,
-          zip: ship.address.postal_code,
-        },
-        items: orderItems,
-      }),
     });
-    pfJson = await pfRes.json().catch(() => ({}));
+    const confJson = await conf.json().catch(() => ({}));
+    if (!conf.ok) {
+      if (conf.status >= 500) {
+        console.error("Printful confirm 5xx (transient):", JSON.stringify(confJson).slice(0, 300));
+        return NextResponse.json({ error: "retry" }, { status: 500 });
+      }
+      await alert(
+        `Printful draft #${pfOrder.id} created but CONFIRM rejected (session ${full.id}): ${JSON.stringify(confJson).slice(0, 200)}`
+      );
+      return NextResponse.json({ received: true, fulfillment: "confirm-rejected" });
+    }
   } catch (err) {
-    console.error("Printful create failed (transient):", err.message);
+    console.error("Printful confirm failed (transient):", err.message);
     return NextResponse.json({ error: "retry" }, { status: 500 });
   }
 
-  if (!pfRes.ok) {
-    // 4xx = permanent (bad address, discontinued variant): alert, no retry storm.
-    // 5xx = transient: let Stripe retry; dedupe check absorbs double-sends.
-    if (pfRes.status >= 500) {
-      console.error("Printful 5xx (transient):", JSON.stringify(pfJson).slice(0, 300));
-      return NextResponse.json({ error: "retry" }, { status: 500 });
-    }
-    await alert(
-      `Printful REJECTED order for ${cartLines.map((l) => l.i).join(", ")} (session ${full.id}): ${JSON.stringify(pfJson).slice(0, 200)}`
-    );
-    return NextResponse.json({ received: true, fulfillment: "rejected" });
-  }
-
-  console.log("Printful order created:", pfJson?.result?.id, "for", full.id);
-  // Good-news ping (never blocks the response; no customer address in the message).
-  if (process.env.ALERT_NTFY_URL) {
-    try {
-      await fetch(process.env.ALERT_NTFY_URL, {
-        method: "POST",
-        body: `SALE printed: $${(full.amount_total / 100).toFixed(2)} — ${cartLines
-          .map((l) => `${l.i} x${l.q}`)
-          .join(", ")} (PF #${pfJson?.result?.id})`,
-        headers: { Title: "TOGG sale", Priority: "default", Tags: "tada" },
-      });
-    } catch {
-      /* never fail the webhook over a ping */
-    }
-  }
+  console.log("Printful order confirmed:", pfOrder.id, "for", full.id);
+  await notify(
+    `SALE printed: ${money(full.amount_total)} — ${cartLines.map((l) => `${l.i} x${l.q}`).join(", ")} ` +
+      `(PF #${pfOrder.id}) | profit ${money(profitCents)} | SAGE ${money(sageEarmarkCents)}`,
+    { title: "TOGG sale", priority: "default", tags: "tada" }
+  );
   return NextResponse.json({ received: true, fulfillment: "created" });
 }

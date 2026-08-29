@@ -298,3 +298,9 @@ a { color: inherit; text-decoration: none; }
   .cart-count.pop { animation: none; }
   .cart-btn:hover, .buy-btn:hover { transform: none; }
 }
+
+/* cart: ships-to + SAGE line */
+.cart-country { display: flex; align-items: center; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+.cart-country .opt-label { margin: 0; }
+.cart-country .opt { padding: 8px 12px; font-size: 12px; }
+.cart-sage { color: var(--lilac); font-size: 12.5px; }

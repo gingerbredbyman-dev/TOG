@@ -2,6 +2,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   readCart, setLineQty, removeLine, cartCount, onCartChange, onCartOpen, MAX_QTY,
+  cartCountry, setCartCountry,
 } from "../lib/cart";
 import { formatPrice } from "../lib/format";
 
@@ -16,9 +17,12 @@ export default function CartWidget() {
   const abortRef = useRef(null);
   const panelRef = useRef(null);
 
+  const [fallbackLines, setFallbackLines] = useState([]);
+
   const requote = useCallback(() => {
     const lines = readCart();
     setQuoteErr("");
+    setFallbackLines(lines);
     abortRef.current?.abort();
     if (!lines.length) {
       setQuote(null);
@@ -29,7 +33,7 @@ export default function CartWidget() {
     fetch("/api/cart-quote", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items: lines }),
+      body: JSON.stringify({ items: lines, country: cartCountry() }),
       signal: ctl.signal,
     })
       .then((r) => r.json())
@@ -71,13 +75,20 @@ export default function CartWidget() {
   }, [open, requote]);
 
   async function checkout() {
+    if (!quote) return;
     setBusy(true);
     setCheckoutErr("");
     try {
+      // Charge exactly the lines and country the drawer is DISPLAYING (the
+      // quote), not a re-read of localStorage — another tab may have changed
+      // the cart since, and the buyer must never pay a total they didn't see.
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ items: readCart() }),
+        body: JSON.stringify({
+          items: quote.lines.map((l) => ({ id: l.id, edition: l.edition, size: l.size, qty: l.qty })),
+          country: quote.country,
+        }),
       });
       const data = await res.json();
       if (data.url) window.location.href = data.url;
@@ -164,7 +175,40 @@ export default function CartWidget() {
                 </div>
               ))}
               {!quote && !quoteErr && <p className="cart-note">Pricing your haul…</p>}
-              {quoteErr && <p className="cart-err">⚠ {quoteErr}</p>}
+              {quoteErr && (
+                <>
+                  <p className="cart-err">⚠ {quoteErr}</p>
+                  {/* The quote failed (e.g. a product left the catalog), so the
+                      priced lines above are empty — offer the raw cart so the
+                      buyer can remove the dead line instead of being stuck. */}
+                  {fallbackLines.map((l) => (
+                    <div className="cart-line" key={`fb:${l.id}:${l.size}`}>
+                      <div className="cart-line-info">
+                        <span className="cart-line-name">{l.id}</span>
+                        <span className="cart-line-meta">{l.size ? `${l.size} • ` : ""}qty {l.qty}</span>
+                      </div>
+                      <div className="cart-line-end">
+                        <button className="cart-remove" onClick={() => removeLine(l)}>
+                          remove
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </>
+              )}
+            </div>
+
+            <div className="cart-country">
+              <span className="opt-label">Ships to</span>
+              {["US", "CA"].map((c) => (
+                <button
+                  key={c}
+                  className={`opt ${(quote?.country || cartCountry()) === c ? "sel" : ""}`}
+                  onClick={() => setCartCountry(c)}
+                >
+                  {c === "US" ? "United States" : "Canada"}
+                </button>
+              ))}
             </div>
 
             {quote && (
@@ -176,6 +220,10 @@ export default function CartWidget() {
                 <div>
                   <span>Shipping</span>
                   <span>{formatPrice(quote.shippingCents)}</span>
+                </div>
+                <div className="cart-sage">
+                  <span>🏳️‍🌈 5% to SAGE (included)</span>
+                  <span>{formatPrice(quote.sageCents)}</span>
                 </div>
                 <div className="cart-grand">
                   <span>Total</span>
@@ -189,7 +237,8 @@ export default function CartWidget() {
             </button>
             {checkoutErr && <p className="cart-err">⚠ {checkoutErr}</p>}
             <p className="cart-note">
-              One order, one shipping charge — everything prints when you do.
+              Shipping is exactly what the printers charge us — no padding. 5% of
+              every sale goes to SAGE for LGBTQ+ elders.
             </p>
           </>
         )}

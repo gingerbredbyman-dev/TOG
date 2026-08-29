@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { formatPrice, webPath } from "../../../lib/format";
-import { addToCart, openCart } from "../../../lib/cart";
+import { addToCart, openCart, cartCountry } from "../../../lib/cart";
 
 export default function ProductView({ product }) {
   const editions = Object.keys(product.editions);
@@ -31,7 +31,10 @@ export default function ProductView({ product }) {
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ items: [{ id: product.id, edition, size, qty: 1 }] }),
+        body: JSON.stringify({
+          items: [{ id: product.id, edition, size, qty: 1 }],
+          country: cartCountry(),
+        }),
       });
       const data = await res.json();
       if (data.url) window.location.href = data.url;
@@ -77,7 +80,8 @@ export default function ProductView({ product }) {
         <p className="pp-tag">{product.tagline}</p>
         <div className="pp-price">{formatPrice(product.priceCents)}</div>
         <p className="charity-note">
-          🏳️‍🌈 5% of all proceeds go to a gay charity of TOGG&rsquo;s choosing.
+          🏳️‍🌈 5% of every sale goes to SAGE — fighting homelessness among LGBTQ+
+          elders with affordable, discrimination-free housing.
         </p>
 
         {product.sizes && product.sizes.length > 1 && (

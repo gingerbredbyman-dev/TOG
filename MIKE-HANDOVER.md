@@ -81,3 +81,41 @@ First-day checklist (Austin drives, you watch):
 - **Pause the shop:** one env switch turns checkout off (site stays up).
 - **Refunds:** Stripe dashboard → Payments → Refund. Printful orders can be
   canceled within minutes of creation from the Printful dashboard.
+
+## Money correctness (added 2026-08-22)
+
+Every order now covers its own costs, enforced twice:
+1. **Pricing gate** — `npm run audit` proves each product's retail covers the
+   Printful cost (worst-case size), Printful-billed tax, Stripe's fee, and the
+   5% SAGE earmark. Run it after ANY price or catalog change; CI-fail on red.
+2. **Order backstop** — the webhook creates each paid order as a Printful DRAFT,
+   compares real costs against what the buyer paid, and only confirms it for
+   production when profit ≥ $0 (`FULFILL_MIN_PROFIT_CENTS` to raise the floor).
+   Underwater orders stay drafts and fire an urgent phone alert: review them in
+   Printful → Orders and confirm or refund by hand.
+
+Shipping is charged at Printful's own parcel rates (US + Canada) — a pass-through
+that cannot lose money. If Printful reprices shipping, update `RATES` in
+`lib/shipping.js` and re-run `npm run audit`.
+
+### SAGE donations (5% of every sale)
+Each paid session is stamped with its earmark (`sage_cents` metadata) — Stripe is
+the ledger. To see what's owed: `npm run sage`. Donate at sageusa.org and note
+the date/amount in the partner ledger.
+
+### Two dashboard tasks that fatten every margin (owner action)
+1. **Florida resale certificate** → Printful Dashboard → Settings → Taxes →
+   submit a resale certificate. Printful then stops charging ~7% sales tax on
+   every order they bill us. (You're then expected to collect tax from Florida
+   buyers — that's what Stripe Tax below is for.)
+2. **Stripe Tax** → Stripe Dashboard → Tax → activate, add your registrations
+   (Florida at minimum). Then set the Vercel env `STRIPE_TAX=on` and redeploy —
+   checkout starts charging each buyer their own state's tax automatically.
+   Until both steps are done, prices carry a built-in tax buffer, so nothing
+   loses money either way.
+
+### Refunds — the one rule
+If you refund a buyer in Stripe, ALSO cancel the matching Printful order/draft
+(Printful → Orders). The system never auto-confirms over a refund it can see,
+but a canceled draft is the unambiguous signal. `npm run reconcile` cross-checks
+every paid payment against Printful and flags anything stuck, weekly is plenty.
