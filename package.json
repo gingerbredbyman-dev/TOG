@@ -12,7 +12,8 @@
     "sync": "node --env-file-if-exists=.env.local scripts/sync-merch.mjs",
     "audit": "node scripts/price-audit.mjs",
     "sage": "node --env-file-if-exists=.env.local scripts/sage-report.mjs",
-    "reconcile": "node --env-file-if-exists=.env.local scripts/reconcile-orders.mjs"
+    "reconcile": "node --env-file-if-exists=.env.local scripts/reconcile-orders.mjs",
+    "reprice": "node --env-file-if-exists=.env.local scripts/reprice.mjs"
   },
   "dependencies": {
     "next": "^15.4.0",

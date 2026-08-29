@@ -6,7 +6,7 @@
 import { readFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
-import { STRIPE_PCT, STRIPE_INTL_PCT, STRIPE_FLAT_CENTS, SAGE_PCT } from "../lib/pricing.js";
+import { STRIPE_PCT, STRIPE_FLAT_CENTS, SAGE_PCT, evaluateRetail } from "../lib/pricing.js";
 import { RATES } from "../lib/shipping.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -34,24 +34,19 @@ for (const p of seed.products) {
   // PF tax scales with the item value; scale the measured tax the same way.
   const tax = Math.ceil(c.taxUSCents * (item / c.itemCents));
   const shipCharge = RATES.US[type].first;
-  const gross = p.priceCents + shipCharge; // fee applies to the whole charge
-  const fee = Math.ceil(gross * STRIPE_PCT) + STRIPE_FLAT_CENTS;
+  const fee = Math.ceil((p.priceCents + shipCharge) * STRIPE_PCT) + STRIPE_FLAT_CENTS;
   const sage = Math.round(p.priceCents * SAGE_PCT);
-  // Shipping cancels: charged at PF's own rate. Profit is retail minus the rest.
-  const profit = p.priceCents - item - tax - fee - sage;
+  // Shared math with reprice.mjs: US floor = profitability bar; CA worst case
+  // (heavier tax + intl-card surcharge) = the never-lose-money bar.
+  const { usProfit: profit, caProfit } = evaluateRetail({
+    retailCents: p.priceCents,
+    itemCents: item,
+    taxUSCents: tax,
+    taxCACents: Math.ceil((c.taxCACents || 0) * (item / c.itemCents)),
+    shipUSFirstCents: shipCharge,
+    shipCAFirstCents: RATES.CA[type].first,
+  });
   const floor = PROFIT_FLOOR[type] ?? 600;
-  // CA worst case: measured CA tax (Canadian GST/PST runs roughly double the US
-  // figure — 2.2x scaled US is the floor when unmeasured) plus the +1.5%
-  // international-card surcharge. Must never go NEGATIVE; the US floor above is
-  // the profitability bar, this is the never-lose-money bar.
-  const caTax = Math.max(
-    Math.ceil((c.taxCACents || 0) * (item / c.itemCents)),
-    Math.ceil(tax * 2.2)
-  );
-  const caFee =
-    Math.ceil((p.priceCents + RATES.CA[type].first) * (STRIPE_PCT + STRIPE_INTL_PCT)) +
-    STRIPE_FLAT_CENTS;
-  const caProfit = p.priceCents - item - caTax - caFee - sage;
   const bad = profit < floor || caProfit < 0;
   if (bad) fail++;
   const $ = (v) => (v / 100).toFixed(2).padStart(6);
